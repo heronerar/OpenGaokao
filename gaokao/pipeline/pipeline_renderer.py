@@ -205,7 +205,7 @@ def render_recommendation_card(school_rec) -> str:
                 f'<span class="major-score">匹配度 {score:.0f}</span>'
                 f'<span class="major-reason">{_esc(reason)}</span></li>'
             )
-        majors_html = f'<ul class="recommended-majors">{''.join(items)}</ul>'
+        majors_html = '<ul class="recommended-majors">' + "".join(items) + "</ul>"
 
     # 理由
     reasons = getattr(school_rec, 'reasons', []) or []
