@@ -1,0 +1,196 @@
+# 云南省高考志愿配置
+# 3+1+2 新高考，2025年首届，院校专业组模式
+
+name: "云南省"
+slug: "yunnan"
+gaokao_mode: "3+1+2"
+volunteer_mode: "group"       # 院校专业组模式（13省）
+reform_year: 2025
+
+category:
+  physics: ["物理", "物理类", "理科"]
+  history: ["历史", "历史类", "文科"]
+
+years:
+  plan: 2025
+  score_line: 2025
+  history: [2023, 2024, 2025]
+
+tables:
+  score_line_prefix: "score_line_"
+  enroll_plan_prefix: "enroll_plan_"
+  score_distribution: "score_distribution"
+
+thresholds:
+  # 与CLAUDE.md约束一致: 冲<35%, 稳35-85%, 保≥85%
+  chong_max: 35
+  wen_range: [35, 85]
+  bao_min: 85
+  # 本科线/专科线（科类→分数映射）
+  score_lines:
+    物理类:
+      本科线: 420
+      专科线: 200
+    历史类:
+      本科线: 430
+      专科线: 200
+    # 旧高考兼容标签（历史数据用）
+    理科:
+      本科线: 420
+      专科线: 200
+    文科:
+      本科线: 430
+      专科线: 200
+
+probability:
+  lambda_sensitivity: 2.0
+  trend_clamp: 0.30
+  year_weights: [0.5, 0.3, 0.2]
+
+subject_map:
+  physics_chemistry: "物理+化学"
+  physics_only: "物理"
+  history_only: "历史"
+  no_restriction: "不限"
+
+score_segments:
+  elite_max: 500
+  high_max: 5000
+  mid_max: 50000
+
+health_exclusions:
+  color_blind: ["化学类", "医学类", "生物类", "美术类"]
+  color_weak: ["化学类", "医学类"]
+  vision_high: ["飞行技术", "航海技术"]
+  smell_loss: ["食品科学类"]
+
+# ── 云南特有：批次配置 ──
+# 来源: docs/yunnan_batch_rules.md
+batches:
+  "提前本科批A段":
+    name: "提前本科批A段（优师专项/免费定向）"
+    batch_key: "提前本科批A段"
+    volunteer_count: 1
+    method: "单志愿"
+    section: "A"
+    batch_type: "提前本科批"
+    chong_ratio: 0.3
+    wen_ratio: 0.4
+    bao_ratio: 0.3
+    chong_prob_range: [25, 50]
+    wen_prob_range: [50, 85]
+    bao_prob_range: [85, 100]
+
+  "提前本科批B段":
+    name: "提前本科批B段（军队/公安院校）"
+    batch_key: "提前本科批B段"
+    volunteer_count: 10
+    method: "平行志愿"
+    section: "B"
+    batch_type: "提前本科批"
+    chong_ratio: 0.3
+    wen_ratio: 0.4
+    bao_ratio: 0.3
+    chong_prob_range: [25, 50]
+    wen_prob_range: [50, 85]
+    bao_prob_range: [85, 100]
+
+  "提前本科批C段":
+    name: "提前本科批C段（消防/招飞/航海等）"
+    batch_key: "提前本科批C段"
+    volunteer_count: 1
+    method: "单志愿"
+    section: "C"
+    batch_type: "提前本科批"
+    chong_ratio: 0.3
+    wen_ratio: 0.4
+    bao_ratio: 0.3
+    chong_prob_range: [25, 50]
+    wen_prob_range: [50, 85]
+    bao_prob_range: [85, 100]
+
+  "提前本科批D段":
+    name: "提前本科批D段（公费师范生/马理论/港澳高校）"
+    batch_key: "提前本科批D段"
+    volunteer_count: 10
+    method: "平行志愿"
+    section: "D"
+    batch_type: "提前本科批"
+    chong_ratio: 0.3
+    wen_ratio: 0.4
+    bao_ratio: 0.3
+    chong_prob_range: [25, 50]
+    wen_prob_range: [50, 85]
+    bao_prob_range: [85, 100]
+
+  "本科批A段":
+    name: "本科批A段（高校专项计划）"
+    batch_key: "本科批A段"
+    volunteer_count: 1
+    method: "单志愿"
+    section: "A"
+    batch_type: "本科批"
+    requires_special: true
+    eligible_condition: "需高校专项计划资格"
+    chong_ratio: 0.3
+    wen_ratio: 0.4
+    bao_ratio: 0.3
+    chong_prob_range: [25, 50]
+    wen_prob_range: [50, 85]
+    bao_prob_range: [85, 100]
+
+  "本科批B段":
+    name: "本科批B段（普通本科）"
+    batch_key: "本科批B段"
+    volunteer_count: 40
+    method: "平行志愿"
+    section: "B"
+    batch_type: "本科批"
+    chong_ratio: 0.15        # 6/40 冲
+    wen_ratio: 0.55          # 22/40 稳
+    bao_ratio: 0.30          # 12/40 保
+    chong_prob_range: [20, 35]
+    wen_prob_range: [35, 85]
+    bao_prob_range: [85, 100]
+
+  "提前专科批A段":
+    name: "提前专科批A段（专科免费定向）"
+    batch_key: "提前专科批A段"
+    volunteer_count: 1
+    method: "单志愿"
+    section: "A"
+    batch_type: "提前专科批"
+    requires_special: true
+    chong_ratio: 0.3
+    wen_ratio: 0.4
+    bao_ratio: 0.3
+    chong_prob_range: [25, 50]
+    wen_prob_range: [50, 85]
+    bao_prob_range: [85, 100]
+
+  "提前专科批B段":
+    name: "提前专科批B段（定向军士）"
+    batch_key: "提前专科批B段"
+    volunteer_count: 10
+    method: "平行志愿"
+    section: "B"
+    batch_type: "提前专科批"
+    chong_ratio: 0.3
+    wen_ratio: 0.4
+    bao_ratio: 0.3
+    chong_prob_range: [25, 50]
+    wen_prob_range: [50, 85]
+    bao_prob_range: [85, 100]
+
+  "高职专科批":
+    name: "高职专科批"
+    batch_key: "高职专科批"
+    volunteer_count: 40
+    method: "平行志愿"
+    batch_type: "高职专科批"
+    chong_ratio: 0.15
+    wen_ratio: 0.55
+    bao_ratio: 0.30
+    chong_prob_range: [20, 35]
+    wen_prob_range: [35, 85]
+    bao_prob_range: [85, 100]

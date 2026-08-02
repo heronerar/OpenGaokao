@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>OpenGaokao — 开源透明高考志愿推荐</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============================================ -->
+<!-- 模式 A：问卷填写流（10 步引导式）             -->
+<!-- ============================================ -->
+<div id="app-survey" class="app-mode">
+    <header class="survey-header">
+        <div class="brand">🎓 OpenGaokao</div>
+        <div class="survey-actions">
+            <button id="btn-pause" type="button" class="link-btn" title="进度自动保存到本地">💾 暂离</button>
+            <button id="btn-reset" type="button" class="link-btn danger" title="清除所有作答">🗑️ 重置</button>
+        </div>
+    </header>
+
+    <!-- 阶段里程碑（10个圆点，仅高亮已完成+当前） -->
+    <nav class="milestones" id="milestones"></nav>
+
+    <!-- 当前步骤的标题 + 子说明 + 预计时长 -->
+    <div class="step-meta" id="step-meta"></div>
+
+    <!-- 题目渲染容器 -->
+    <main class="survey-main" id="survey-main"></main>
+
+    <!-- 底部行动条 -->
+    <nav class="action-bar">
+        <button id="btn-prev" type="button" class="btn-ghost">← 上一步</button>
+        <div class="step-progress" id="step-progress">第 1/10 步</div>
+        <button id="btn-next" type="button" class="btn-primary">下一步 →</button>
+    </nav>
+
+    <footer class="survey-footer">
+        <span>💡 进度已自动保存 · 关闭浏览器后回来仍可继续</span>
+        <span> · <a data-source-code href="https://github.com/heronerar/OpenGaokao" target="_blank" rel="noopener noreferrer">查看对应源码（AGPL-3.0）</a></span>
+    </footer>
+</div>
+
+<!-- ============================================ -->
+<!-- 模式 B：推荐结果（问卷提交后切到此视图）        -->
+<!-- ============================================ -->
+<div id="app-result" class="app-mode hidden">
+    <header class="result-header">
+        <div class="brand">🎓 OpenGaokao</div>
+        <nav class="result-tabs">
+            <button class="tab active" type="button" data-tab="recommendations">📊 推荐结果</button>
+            <button class="tab" type="button" data-tab="pipeline">🔍 决策管道</button>
+            <button class="tab" type="button" data-tab="risk">📝 风险评估</button>
+            <button class="tab" type="button" data-tab="analysis">📋 深度分析</button>
+        </nav>
+        <button id="btn-restart" type="button" class="link-btn">↻ 重新填写</button>
+        <div class="result-export-group">
+            <button id="btn-export-html" type="button" class="btn-export">📄 导出 HTML</button>
+            <button id="btn-export-excel" type="button" class="btn-export">📊 导出 Excel</button>
+        </div>
+    </header>
+
+    <main class="result-main">
+        <section class="tab-panel active" id="tab-recommendations"></section>
+        <section class="tab-panel" id="tab-pipeline"></section>
+        <section class="tab-panel" id="tab-risk"></section>
+        <section class="tab-panel" id="tab-analysis"></section>
+    </main>
+
+    <footer class="result-footer">
+        <p class="disclaimer">⚠️ 概率仅基于历史数据统计估算，不构成录取承诺。请结合当年招生计划和政策综合判断。</p>
+        <p><a data-source-code href="https://github.com/heronerar/OpenGaokao" target="_blank" rel="noopener noreferrer">查看对应源码（AGPL-3.0）</a></p>
+    </footer>
+</div>
+
+<!-- 全屏加载遮罩 -->
+<div id="loading" class="loading hidden">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">正在分析你的志愿数据…</div>
+</div>
+
+<script src="js/survey_data.js"></script>
+<script src="js/survey_engine.js"></script>
+<script src="js/result_view.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

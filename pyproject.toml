@@ -1,0 +1,60 @@
+[project]
+name = "open-gaokao"
+version = "1.0.0"
+description = "开源透明的高考志愿推荐引擎 — 面向3+1+2新高考（21省），当前已适配云南"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "OpenGaokao Contributors"}
+]
+keywords = ["gaokao", "college-admission", "volunteer-recommendation", "open-source"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Education",
+]
+requires-python = ">=3.10"
+
+dependencies = [
+    "flask>=3.0",
+    "flask-cors>=6.0",
+    "reportlab>=4.4",
+    "openpyxl>=3.1",
+    "numpy>=2.0",
+    "pyyaml>=6.0",
+]
+
+[project.urls]
+Source = "https://github.com/heronerar/OpenGaokao"
+Issues = "https://github.com/heronerar/OpenGaokao/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=6.0",
+    "black>=24.0",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["gaokao*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

@@ -1,0 +1,64 @@
+# === 大数据库（绝不进入 git）===
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
+*.sqlite-shm
+*.sqlite-wal
+*.db-journal
+*.sqlite-journal
+*.db.backup.*
+
+# === 运行产物 / 缓存 ===
+output/
+logs/
+*.log
+.fuse_hidden*
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+.coverage
+htmlcov/
+dist/
+build/
+
+# === Secrets ===
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === OS ===
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# === 二进制数据文件 ===
+*.xlsx
+*.xls
+*.pdf
+
+# === 压缩包 ===
+*.zip
+*.tar.gz
+
+# === Claude Code ===
+.claude/
+
+# OG-F-19: 内部战略/竞争分析文档，不随开源仓库分发
+docs/OpenGaokao_Risk_Analysis.md
+docs/OpenGaokao_Executive_Summary.md
+docs/OpenGaokao_Decision_Matrix.md

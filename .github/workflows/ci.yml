@@ -1,0 +1,50 @@
+name: CI
+
+permissions:
+  contents: read
+
+# 闭掉 OG-F-26 / OG-O-14「无 CI」：每次 push / PR 自动跑代码级门禁。
+# 数据库（*.db）全部 gitignore，CI 现场用 data/generate_example_db.py 生成可复现示例库；
+# 依赖私有省份库的检查（数据完整性 / 视图新鲜度）属发版本地环节，由 --ci 跳过。
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install pytest
+
+      - name: 生成示例库（可复现·无私有数据）
+        run: python data/generate_example_db.py
+
+      - name: 数据门禁逻辑自检（在示例库上跑科类门禁 + 视图新鲜度）
+        # OG-F-42: --ci 会跳过依赖私有省份库的检查，导致科类标签门禁/视图新鲜度在 CI 完全不跑
+        # （恰是数据/科类回归最易复发处）。这里用示例库现造一个 province，跑全套（非 --ci）验证门禁逻辑本身。
+        run: |
+          cp data/example.db data/ci_example_gaokao.db
+          python scripts/create_views.py --province ci_example
+          python scripts/post_import_validation.py --province ci_example --quick
+          rm -f data/ci_example_gaokao.db
+
+      - name: 发版门禁（CI 模式）
+        # 语法 + pytest + 真实 Flask/Web/API 进程（显式 example 源）+ 隐私 + AGPL
+        run: python scripts/verify_release.py --ci

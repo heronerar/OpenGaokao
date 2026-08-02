@@ -1,0 +1,16 @@
+# OpenGaokao — 运行时 Python 依赖
+#
+# 锁定精确版本以保证可复现。
+# 开发依赖（pytest, black, ruff）见 pyproject.toml [project.optional-dependencies]
+
+# Web framework
+flask==3.1.2
+flask-cors==6.0.2
+
+# Report generation
+reportlab==4.4.10
+openpyxl==3.1.5
+
+# Data processing
+numpy==2.2.6
+pyyaml==6.0.3

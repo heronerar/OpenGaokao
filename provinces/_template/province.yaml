@@ -1,0 +1,68 @@
+# 省份配置模板
+# 复制此文件到 provinces/{province_name}/province.yaml 并修改
+
+# ── 基本信息 ──
+name: ""                    # 省份名称，如 "云南省"
+slug: ""                    # 标识符，如 "yunnan"
+gaokao_mode: ""             # 3+1+2 / 3+3 / 文理分科
+volunteer_mode: ""          # group(院校专业组) / major(专业+院校) / old(旧高考)
+reform_year: 2025           # 新高考改革年份
+
+# ── 科类标签（数据库查询用）──
+category:
+  physics:                # 物理类标签集合
+    - "物理"
+    - "物理类"
+    - "理科"              # 旧高考回退查询
+  history:                # 历史类标签集合
+    - "历史"
+    - "历史类"
+    - "文科"              # 旧高考回退查询
+
+# ── 年份参数 ──
+years:
+  plan: 2025              # 当前招生计划年份
+  score_line: 2025        # 当前投档线年份
+  history: [2023, 2024, 2025]  # 历史数据年份范围
+
+# ── 表名参数（如各省表名不同则覆盖）──
+tables:
+  score_line_prefix: "score_line_"     # 投档线表前缀
+  enroll_plan_prefix: "enroll_plan_"   # 招生计划表前缀
+  score_distribution: "score_distribution"  # 一分一段表
+
+# ── 冲稳保阈值 ──
+thresholds:
+  chong_max: 35             # 冲区间上限概率%
+  wen_range: [35, 85]       # 稳区间概率范围%
+  bao_min: 85               # 保区间下限概率%
+
+# ── 概率模型参数 ──
+probability:
+  lambda_sensitivity: 2.0   # λ 敏感度系数 k
+  trend_clamp: 0.30         # 位次趋势钳位（±30%）
+  year_weights:             # 近N年数据权重
+    - 0.5                   # 最近年
+    - 0.3                   # 前一年
+    - 0.2                   # 再前一年
+
+# ── 选科要求映射 ──
+subject_map:
+  physics_chemistry: "物理+化学"
+  physics_only: "物理"
+  history_only: "历史"
+  no_restriction: "不限"
+
+# ── 分数段（用于分段策略）──
+score_segments:
+  elite_max: 500            # 顶尖分数段最高位次
+  high_max: 5000            # 高分段最高位次
+  mid_max: 50000            # 中分段最高位次
+  # 超过50000为低分段
+
+# ── 体检/政审排除项 ──
+health_exclusions:
+  color_blind: ["化学类", "医学类", "生物类", "美术类"]
+  color_weak: ["化学类", "医学类"]
+  vision_high: ["飞行技术", "航海技术"]
+  smell_loss: ["食品科学类"]

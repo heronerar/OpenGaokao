@@ -1,0 +1,850 @@
+{
+  "survey_title": "高考志愿智能决策调研问卷",
+  "version": "2.0",
+  "description": "统一版问卷（整合文史/理工、学生/家长），面向学生填写，构建个性化志愿填报方案",
+  "privacy_notice": "开源项目默认在本机处理问卷，不运营集中收集服务。请优先使用昵称或代号；部署者如收集个人信息，须自行说明存储、用途和删除机制并履行适用法律义务。",
+  "sections": [
+    {
+      "id": "basic_info",
+      "title": "一、基本信息",
+      "description": "用于本地生成报告；请优先填写昵称或代号",
+      "questions": [
+        {
+          "id": "q1_name",
+          "type": "text",
+          "required": true,
+          "label": "考生称呼（可使用昵称）",
+          "placeholder": "请使用昵称或代号"
+        },
+        {
+          "id": "q2_gender",
+          "type": "radio",
+          "required": true,
+          "label": "性别",
+          "options": [
+            "男",
+            "女"
+          ]
+        },
+        {
+          "id": "q3_birth",
+          "type": "date",
+          "required": true,
+          "label": "出生日期",
+          "placeholder": "YYYY-MM-DD"
+        },
+        {
+          "id": "q4_ethnicity",
+          "type": "radio",
+          "required": true,
+          "label": "是否少数民族",
+          "options": [
+            "是",
+            "否"
+          ]
+        },
+        {
+          "id": "q5_exam_id",
+          "type": "text",
+          "required": false,
+          "label": "本地标识码（选填，请勿填真实考生号）",
+          "placeholder": "可留空；如需区分本地记录可填代号"
+        },
+        {
+          "id": "q6_phone",
+          "type": "tel",
+          "required": false,
+          "label": "考生电话（选填，本地推荐不需要）",
+          "placeholder": "可留空；本项目不发送通知"
+        },
+        {
+          "id": "q7_parent_name",
+          "type": "text",
+          "required": false,
+          "label": "家长称呼（选填，可使用昵称）",
+          "placeholder": "可留空"
+        },
+        {
+          "id": "q8_parent_phone",
+          "type": "tel",
+          "required": false,
+          "label": "家长电话（选填）",
+          "placeholder": "可留空；本项目不发送通知"
+        }
+      ]
+    },
+    {
+      "id": "exam_results",
+      "title": "二、高考情况",
+      "description": "用于位次匹配和录取概率计算",
+      "questions": [
+        {
+          "id": "q9_total_score",
+          "type": "number",
+          "required": true,
+          "label": "高考总分",
+          "placeholder": "请输入高考总分"
+        },
+        {
+          "id": "q10_rank",
+          "type": "number",
+          "required": true,
+          "label": "一分一段表排名",
+          "placeholder": "请输入全省位次"
+        },
+        {
+          "id": "q11_category",
+          "type": "radio",
+          "required": true,
+          "label": "科类",
+          "options": [
+            "物理类",
+            "历史类"
+          ],
+          "note": "新高考（2025年起）：物理类=原理科，历史类=原文科"
+        },
+        {
+          "id": "q12_subject_combo",
+          "type": "radio",
+          "required": true,
+          "label": "选考科目组合",
+          "options": [
+            "物理+化学+生物",
+            "物理+化学+地理",
+            "物理+化学+政治",
+            "物理+生物+地理",
+            "物理+生物+政治",
+            "物理+地理+政治",
+            "历史+政治+地理",
+            "历史+政治+生物",
+            "历史+地理+生物",
+            "其他组合"
+          ],
+          "note": "需与高考报名信息一致"
+        }
+      ]
+    },
+    {
+      "id": "subject_abilities",
+      "title": "三、学科能力评估",
+      "description": "用于专业匹配和性格倾向分析",
+      "questions": [
+        {
+          "id": "q13_chinese_score",
+          "type": "number",
+          "required": true,
+          "label": "语文实考分",
+          "placeholder": "请输入语文分数"
+        },
+        {
+          "id": "q14_chinese_rank_pct",
+          "type": "radio",
+          "required": true,
+          "label": "语文省排名百分比",
+          "options": [
+            "前10%",
+            "前10-30%",
+            "前30-50%",
+            "前50-70%",
+            "后30%"
+          ]
+        },
+        {
+          "id": "q15_math_score",
+          "type": "number",
+          "required": true,
+          "label": "数学实考分",
+          "placeholder": "请输入数学分数"
+        },
+        {
+          "id": "q16_math_rank_pct",
+          "type": "radio",
+          "required": true,
+          "label": "数学省排名百分比",
+          "options": [
+            "前10%",
+            "前10-30%",
+            "前30-50%",
+            "前50-70%",
+            "后30%"
+          ]
+        },
+        {
+          "id": "q17_english_score",
+          "type": "number",
+          "required": true,
+          "label": "英语实考分",
+          "placeholder": "请输入英语分数"
+        },
+        {
+          "id": "q18_english_rank_pct",
+          "type": "radio",
+          "required": true,
+          "label": "英语省排名百分比",
+          "options": [
+            "前10%",
+            "前10-30%",
+            "前30-50%",
+            "前50-70%",
+            "后30%"
+          ]
+        },
+        {
+          "id": "q19_advantage_1",
+          "type": "radio",
+          "required": true,
+          "label": "第一优势学科",
+          "options": [
+            "语文",
+            "数学",
+            "英语",
+            "物理",
+            "化学",
+            "生物",
+            "历史",
+            "政治",
+            "地理"
+          ]
+        },
+        {
+          "id": "q20_advantage_2",
+          "type": "radio",
+          "required": true,
+          "label": "第二优势学科",
+          "options": [
+            "语文",
+            "数学",
+            "英语",
+            "物理",
+            "化学",
+            "生物",
+            "历史",
+            "政治",
+            "地理"
+          ]
+        },
+        {
+          "id": "q21_competitions",
+          "type": "checkbox",
+          "required": true,
+          "label": "曾参与竞赛类型",
+          "options": [
+            "数学竞赛",
+            "物理竞赛",
+            "化学竞赛",
+            "生物竞赛",
+            "信息学竞赛",
+            "英语竞赛",
+            "作文竞赛",
+            "历史竞赛",
+            "政治竞赛",
+            "地理竞赛",
+            "机器人大赛",
+            "科技创新大赛",
+            "无"
+          ]
+        },
+        {
+          "id": "q22_focus_area",
+          "type": "checkbox",
+          "required": true,
+          "label": "高中阶段主攻方向",
+          "options": [
+            "理科强化",
+            "文科强化",
+            "英语强化",
+            "竞赛培优",
+            "艺术特长",
+            "体育特长",
+            "综合素质",
+            "其他"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "family_background",
+      "title": "四、家庭背景",
+      "description": "用于经济能力评估和资源匹配",
+      "questions": [
+        {
+          "id": "q23_parent_education",
+          "type": "radio",
+          "required": true,
+          "label": "父母最高学历",
+          "options": [
+            "初中及以下",
+            "高中/中专",
+            "大专",
+            "本科",
+            "硕士",
+            "博士"
+          ]
+        },
+        {
+          "id": "q24_parent_occupation",
+          "type": "radio",
+          "required": true,
+          "label": "家长职业领域",
+          "options": [
+            "公务员/事业单位",
+            "企业高管",
+            "技术人员",
+            "教师",
+            "医生",
+            "个体经营",
+            "自由职业",
+            "农民",
+            "其他"
+          ]
+        },
+        {
+          "id": "q25_family_resources",
+          "type": "checkbox",
+          "required": true,
+          "label": "家庭社会资源",
+          "options": [
+            "政府机关人脉",
+            "高校/科研院所",
+            "医疗机构",
+            "企业资源",
+            "金融资源",
+            "法律资源",
+            "无特殊资源"
+          ]
+        },
+        {
+          "id": "q26_family_location",
+          "type": "radio",
+          "required": true,
+          "label": "家庭常住地",
+          "options": [
+            "一线城市",
+            "新一线城市",
+            "二线城市",
+            "三线城市",
+            "县城",
+            "乡镇",
+            "农村"
+          ]
+        },
+        {
+          "id": "q27_annual_tuition",
+          "type": "radio",
+          "required": true,
+          "label": "家庭每年可承担学费",
+          "options": [
+            "5000元以下",
+            "5000-10000元",
+            "10000-20000元",
+            "20000-50000元",
+            "50000-100000元",
+            "100000元以上"
+          ]
+        },
+        {
+          "id": "q28_total_budget",
+          "type": "radio",
+          "required": true,
+          "label": "家长可接受的大学四年总费用",
+          "options": [
+            "5万元以内",
+            "5-10万元",
+            "10-20万元",
+            "20-50万元",
+            "50-100万元",
+            "100万元以上"
+          ]
+        },
+        {
+          "id": "q29_political_review",
+          "type": "radio",
+          "required": true,
+          "label": "直系亲属是否有刑事处罚记录",
+          "options": [
+            "无",
+            "有"
+          ],
+          "note": "军校（三代）、警校（两代）需政审，如有记录可能影响报考"
+        }
+      ]
+    },
+    {
+      "id": "volunteer_preferences",
+      "title": "五、志愿偏好",
+      "description": "用于院校筛选和专业推荐",
+      "questions": [
+        {
+          "id": "q30_special_schools",
+          "type": "checkbox",
+          "required": true,
+          "label": "报考特殊类型院校",
+          "options": [
+            "军事院校",
+            "公安警校",
+            "免费师范生",
+            "定向医学生",
+            "公费师范生",
+            "专项计划",
+            "民族班",
+            "都不考虑"
+          ]
+        },
+        {
+          "id": "q31_core_demand",
+          "type": "radio",
+          "required": true,
+          "label": "对所报志愿核心诉求排序",
+          "options": [
+            "学校名气优先（985/211/双一流）",
+            "专业实力优先",
+            "城市地域优先",
+            "就业率优先",
+            "学费低廉优先",
+            "综合平衡"
+          ]
+        },
+        {
+          "id": "q32_civil_service",
+          "type": "radio",
+          "required": true,
+          "label": "是否要保留考公务员的机会",
+          "options": [
+            "必须保留",
+            "优先考虑",
+            "无所谓",
+            "不考虑"
+          ]
+        },
+        {
+          "id": "q33_target_industries",
+          "type": "checkbox",
+          "required": true,
+          "label": "目标行业",
+          "options": [
+            "信息技术/互联网",
+            "金融/银行",
+            "教育/培训",
+            "医疗/健康",
+            "制造业/工程",
+            "能源/环保",
+            "法律/政务",
+            "传媒/艺术",
+            "建筑/房地产",
+            "农业/食品",
+            "其他"
+          ]
+        },
+        {
+          "id": "q34_medical_preference",
+          "type": "radio",
+          "required": true,
+          "label": "是否学医",
+          "options": [
+            "非常愿意",
+            "可以考虑",
+            "不太愿意",
+            "绝对不考虑"
+          ]
+        },
+        {
+          "id": "q35_agriculture_preference",
+          "type": "radio",
+          "required": true,
+          "label": "是否学农",
+          "options": [
+            "非常愿意",
+            "可以考虑",
+            "不太愿意",
+            "绝对不考虑"
+          ]
+        },
+        {
+          "id": "q36_teacher_preference",
+          "type": "radio",
+          "required": true,
+          "label": "是否当老师",
+          "options": [
+            "非常愿意",
+            "可以考虑",
+            "不太愿意",
+            "绝对不考虑"
+          ]
+        },
+        {
+          "id": "q37_acceptable_majors",
+          "type": "checkbox",
+          "required": true,
+          "label": "可以接受的专业类别",
+          "options": [
+            "工学类",
+            "理学类",
+            "医学类",
+            "农学类",
+            "文学类",
+            "历史学类",
+            "哲学类",
+            "经济学类",
+            "管理学类",
+            "法学类",
+            "教育学类",
+            "艺术学类",
+            "交叉学科"
+          ]
+        },
+        {
+          "id": "q38_physics_preference",
+          "type": "radio",
+          "required": true,
+          "label": "物理成绩如何，希望将来所学专业带物理吗",
+          "options": [
+            "物理很好，希望继续学",
+            "物理一般，无所谓",
+            "物理较差，希望避开",
+            "物理很差，必须避开"
+          ]
+        },
+        {
+          "id": "q39_chemistry_preference",
+          "type": "radio",
+          "required": true,
+          "label": "化学成绩如何，希望将来所学专业带化学吗",
+          "options": [
+            "化学很好，希望继续学",
+            "化学一般，无所谓",
+            "化学较差，希望避开",
+            "化学很差，必须避开"
+          ]
+        },
+        {
+          "id": "q40_physics_direction",
+          "type": "radio",
+          "required": true,
+          "label": "关于物理，更愿意学哪方面",
+          "options": [
+            "力学方向（机械、土木、航空航天等）",
+            "电学方向（电子、通信、计算机等）",
+            "光学方向（光电、激光等）",
+            "理论物理方向",
+            "都不愿意"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "career_tendency",
+      "title": "六、职业倾向",
+      "description": "用于项目自编 RIASEC 风格兴趣代码和工作场景方向建议；未经心理测量学验证，不作诊断",
+      "questions": [
+        {
+          "id": "q41_ideal_workday",
+          "type": "checkbox",
+          "required": true,
+          "label": "请选择3个最能描述你「理想工作日」的场景",
+          "options": [
+            "在实验室做研究",
+            "在办公室写代码/文档",
+            "在会议室开会讨论",
+            "在教室讲课",
+            "在医院看病人",
+            "在工地/工厂巡查",
+            "在户外探险/考察",
+            "在画室/工作室创作",
+            "在法庭辩论",
+            "在银行处理业务",
+            "在网上直播/自媒体",
+            "在健身房带课",
+            "在餐厅/酒店服务",
+            "在机场/车站工作",
+            "其他"
+          ],
+          "max_select": 3
+        },
+        {
+          "id": "q42_unacceptable_work",
+          "type": "radio",
+          "required": true,
+          "label": "你最不能接受的工作状态",
+          "options": [
+            "长期出差",
+            "加班频繁",
+            "夜班/轮班",
+            "单调重复",
+            "高压竞争",
+            "收入不稳定",
+            "社交过多",
+            "孤立无援"
+          ]
+        },
+        {
+          "id": "q43_ethics_dilemma",
+          "type": "radio",
+          "required": true,
+          "label": "若某高薪行业存在伦理争议（如过度数据收集），你的选择",
+          "options": [
+            "高薪优先，伦理可以妥协",
+            "看具体情况",
+            "伦理优先，高薪次要",
+            "绝对不接受伦理争议行业"
+          ]
+        },
+        {
+          "id": "q44_stability_preference",
+          "type": "scale",
+          "required": true,
+          "label": "对「铁饭碗」的看法",
+          "scale_min": 1,
+          "scale_max": 5,
+          "scale_labels": [
+            "1=完全不想",
+            "3=无所谓",
+            "5=非常渴望"
+          ],
+          "note": "分数越高越希望稳定"
+        },
+        {
+          "id": "q45_tech_iteration",
+          "type": "radio",
+          "required": true,
+          "label": "期望从事行业的技术迭代速度",
+          "options": [
+            "快速迭代（互联网/AI等）",
+            "中等迭代（医疗/金融等）",
+            "缓慢迭代（教育/文化等）",
+            "基本稳定（传统工艺等）"
+          ]
+        },
+        {
+          "id": "q46_location_preference",
+          "type": "radio",
+          "required": true,
+          "label": "职业地域倾向",
+          "options": [
+            "一线城市（北上广深）",
+            "新一线城市（成都/杭州/武汉等）",
+            "二线城市",
+            "家乡所在省",
+            "无所谓，看机会"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "university_life",
+      "title": "七、大学生活期待",
+      "description": "用于院校文化和学习环境匹配",
+      "questions": [
+        {
+          "id": "q47_ideal_university",
+          "type": "checkbox",
+          "required": true,
+          "label": "理想大学生活场景（选3项）",
+          "options": [
+            "参加学术讲座",
+            "加入社团活动",
+            "实习/兼职",
+            "考研/保研准备",
+            "出国交换",
+            "创业实践",
+            "志愿服务",
+            "体育竞技",
+            "艺术表演",
+            "科研实验室",
+            "图书馆自习",
+            "其他"
+          ],
+          "max_select": 3
+        },
+        {
+          "id": "q48_dormitory_expectation",
+          "type": "radio",
+          "required": true,
+          "label": "对「大学集体生活」的期待",
+          "options": [
+            "非常期待，喜欢社交",
+            "比较期待，希望交朋友",
+            "一般，无所谓",
+            "不太期待，喜欢独处",
+            "完全不期待"
+          ]
+        },
+        {
+          "id": "q49_minor_attitude",
+          "type": "radio",
+          "required": true,
+          "label": "对「跨专业选课/辅修」的态度",
+          "options": [
+            "非常愿意，想学更多",
+            "可以考虑",
+            "无所谓",
+            "不太愿意，专注本专业",
+            "绝对不愿意"
+          ]
+        },
+        {
+          "id": "q50_further_study",
+          "type": "checkbox",
+          "required": true,
+          "label": "未来深造意向",
+          "options": [
+            "国内保研",
+            "国内考研",
+            "出国读研",
+            "直接就业",
+            "考公务员",
+            "考事业单位",
+            "创业",
+            "自由职业",
+            " undecided"
+          ]
+        },
+        {
+          "id": "q51_parent_support",
+          "type": "checkbox",
+          "required": true,
+          "label": "家长对深造的支持",
+          "options": [
+            "全力支持保研",
+            "全力支持考研",
+            "全力支持出国",
+            "支持就业",
+            "支持考公",
+            "尊重孩子选择"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stress_assessment",
+      "title": "八、压力评估",
+      "description": "用于心理状态评估和推荐策略调整",
+      "questions": [
+        {
+          "id": "q52_stress_tolerance",
+          "type": "radio",
+          "required": true,
+          "label": "可承受压力适配度",
+          "options": [
+            "高压力（高强度竞争）",
+            "中高压力",
+            "中等压力",
+            "中低压力",
+            "低压力（稳定为主）"
+          ]
+        },
+        {
+          "id": "q53_exam_state",
+          "type": "radio",
+          "required": true,
+          "label": "面对重大考试/决策时的状态",
+          "options": [
+            "非常紧张，发挥失常",
+            "比较紧张，但能发挥",
+            "正常发挥",
+            "越战越勇，超常发挥",
+            "完全放松，无所谓"
+          ]
+        },
+        {
+          "id": "q54_major_changes",
+          "type": "checkbox",
+          "required": true,
+          "label": "高三是否经历重大变动",
+          "options": [
+            "转学/转班",
+            "家庭变故",
+            "健康问题",
+            "心理问题",
+            "恋爱影响",
+            "换老师",
+            "无重大变动"
+          ]
+        },
+        {
+          "id": "q55_stress_coping",
+          "type": "checkbox",
+          "required": true,
+          "label": "压力应对方式",
+          "options": [
+            "运动/健身",
+            "听音乐/看电影",
+            "与朋友聊天",
+            "与父母沟通",
+            "写日记/冥想",
+            "玩游戏/刷手机",
+            "暴饮暴食",
+            "自我封闭",
+            "寻求专业帮助"
+          ]
+        },
+        {
+          "id": "q56_change_impact",
+          "type": "radio",
+          "required": true,
+          "label": "重大变动对学习状态的影响",
+          "options": [
+            "严重影响，成绩大幅下降",
+            "较大影响，成绩波动",
+            "一般影响，短期波动",
+            "较小影响，快速恢复",
+            "无影响"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decision_analysis",
+      "title": "九、决策分析",
+      "description": "用于家庭决策协调和推荐策略调整",
+      "questions": [
+        {
+          "id": "q57_peer_influence",
+          "type": "radio",
+          "required": true,
+          "label": "同学/朋友的志愿选择对你的影响",
+          "options": [
+            "很大影响，想和同学一起",
+            "有一定影响",
+            "一般",
+            "较小影响",
+            "完全不受影响"
+          ]
+        },
+        {
+          "id": "q58_decision_control",
+          "type": "radio",
+          "required": true,
+          "label": "你对本次志愿填报的决策控制权",
+          "options": [
+            "完全自己决定",
+            "自己决定，参考家长意见",
+            "家长和自己共同决定",
+            "家长决定，自己参考",
+            "完全家长决定"
+          ]
+        },
+        {
+          "id": "q59_conflict_scenario",
+          "type": "radio",
+          "required": true,
+          "label": "假设你和家长在选择上产生分歧，如考生倾向「兴趣专业」（如艺术学），家长倾向「高回报专业」（如计算机），你的选择",
+          "options": [
+            "坚持兴趣，不听家长",
+            "尝试沟通，寻求折中",
+            "听从家长，放弃兴趣",
+            "寻求第三方帮助（老师/咨询师）",
+            " undecided"
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "total_questions": 59,
+    "required_questions": 59,
+    "optional_questions": 0,
+    "estimated_time": "15-20分钟",
+    "last_updated": "2026-04-24",
+    "version_notes": "整合文史/理工、学生/家长4份问卷，统一为学生版"
+  }
+}

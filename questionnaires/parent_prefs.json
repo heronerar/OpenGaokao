@@ -1,0 +1,22 @@
+{
+  "title": "家长志愿偏好问卷",
+  "description": "15题 · 约5分钟 · 独立完成。您的回答将与孩子的测评结果比对，找到共识区域。",
+  "version": "1.0",
+  "questions": [
+    {"id": "p1", "type": "select", "text": "您认为孩子未来的职业最需要什么？", "required": true},
+    {"id": "p2", "type": "scale_1_5", "text": "孩子的工作稳定性对您有多重要？", "required": true},
+    {"id": "p3", "type": "scale_1_5", "text": "孩子的工作收入水平对您有多重要？", "required": true},
+    {"id": "p4", "type": "select", "text": "您希望孩子在哪里读大学？", "required": true},
+    {"id": "p5", "type": "select", "text": "您对孩子读研/深造的态度？", "required": true},
+    {"id": "p6", "type": "multi_select", "text": "您希望孩子从事什么行业？", "required": false},
+    {"id": "p7", "type": "select", "text": "有没有您认为绝对不能选的专业方向？", "required": false},
+    {"id": "p8", "type": "select", "text": "孩子选择专业时，您最看重什么？", "required": true},
+    {"id": "p9", "type": "select", "text": "如果孩子喜欢的专业您不认可，您会？", "required": true},
+    {"id": "p10", "type": "select", "text": "您对民办院校/独立学院的态度？", "required": false},
+    {"id": "p11", "type": "select", "text": "学费预算对您决策的影响？", "required": true},
+    {"id": "p12", "type": "select", "text": "您觉得孩子的分数属于什么水平？", "required": false},
+    {"id": "p13", "type": "select", "text": "在选专业这件事上，您更倾向于？", "required": true},
+    {"id": "p14", "type": "select", "text": "您对AI推荐志愿的态度？", "required": false},
+    {"id": "p15", "type": "select", "text": "如果和孩子有分歧，您最可能妥协的方面是？", "required": false}
+  ]
+}

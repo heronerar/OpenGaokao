@@ -1,0 +1,60 @@
+"""CLI 基础测试 — 验证所有命令能正常执行"""
+import subprocess
+import sys
+import os
+import pytest
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _cli(*args: str) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        [sys.executable, '-m', 'gaokao.cli', *args],
+        capture_output=True, text=True, cwd=PROJECT_ROOT,
+    )
+
+
+class TestCLI:
+
+    def test_list_provinces(self):
+        r = _cli('--list-provinces')
+        assert r.returncode == 0
+        assert 'yunnan' in r.stdout
+
+    def test_check_config_yunnan(self):
+        r = _cli('--province', 'yunnan', '--check-config')
+        assert r.returncode == 0
+        assert '云南省' in r.stdout
+        assert '3+1+2' in r.stdout
+
+    def test_list_provinces_has_yunnan(self):
+        r = _cli('--list-provinces')
+        assert 'yunnan' in r.stdout
+        assert '云南省' in r.stdout
+
+    def test_example_missing_database_fails_closed(self, monkeypatch, capsys):
+        from gaokao import cli
+
+        original_exists = cli.os.path.exists
+        monkeypatch.setattr(
+            cli.os.path,
+            'exists',
+            lambda path: False if str(path).endswith('example.db') else original_exists(path),
+        )
+
+        assert cli.cmd_run_example('yunnan') == 1
+        assert '示例数据库不存在' in capsys.readouterr().out
+
+
+def test_public_questionnaire_does_not_require_exam_id():
+    """本地开源推荐不得强迫用户提供真实考生号。"""
+    from gaokao.core.questionnaire_parser import QuestionnaireParser
+
+    questionnaire = QuestionnaireParser.create_by_category('物理类').parse({
+        'q1_name': '本地昵称',
+        'q12_total_score': 580,
+        'q13_rank': 15000,
+        'q14_category': '物理类',
+    })
+
+    assert questionnaire.exam_id == ''

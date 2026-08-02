@@ -1,0 +1,3915 @@
+{
+  "survey_title": "高考志愿智能决策调研问卷",
+  "category": "历史类",
+  "version": "3.0",
+  "description": "面向历史类考生，整合文史科特色题目，构建个性化志愿填报方案",
+  "privacy_notice": "开源项目默认在本机处理问卷，不运营集中收集服务。请优先使用昵称或代号；部署者如收集个人信息，须自行说明存储、用途和删除机制并履行适用法律义务。",
+  "sections": [
+    {
+      "id": "basic_info",
+      "title": "一、基本信息",
+      "description": "用于本地生成报告；请优先填写昵称或代号",
+      "questions": [
+        {
+          "id": "q1_name",
+          "type": "text",
+          "required": true,
+          "label": "考生称呼（可使用昵称）",
+          "placeholder": "请使用昵称或代号"
+        },
+        {
+          "id": "q2_gender",
+          "type": "radio",
+          "required": true,
+          "label": "性别",
+          "options": [
+            "男",
+            "女"
+          ]
+        },
+        {
+          "id": "q3_birth",
+          "type": "date",
+          "required": true,
+          "label": "出生日期",
+          "placeholder": "YYYY-MM-DD"
+        },
+        {
+          "id": "q4_ethnicity",
+          "type": "radio",
+          "required": true,
+          "label": "民族",
+          "options": [
+            "汉族",
+            "彝族",
+            "白族",
+            "哈尼族",
+            "傣族",
+            "壮族",
+            "苗族",
+            "回族",
+            "傈僳族",
+            "拉祜族",
+            "佤族",
+            "纳西族",
+            "瑶族",
+            "藏族",
+            "景颇族",
+            "布朗族",
+            "阿昌族",
+            "普米族",
+            "怒族",
+            "基诺族",
+            "德昂族",
+            "独龙族",
+            "满族",
+            "蒙古族",
+            "其他"
+          ],
+          "note": "云南25个少数民族政策不同，部分院校有民族班或加分政策"
+        },
+        {
+          "id": "q5_exam_id",
+          "type": "text",
+          "required": false,
+          "label": "本地标识码（选填，请勿填真实考生号）",
+          "placeholder": "可留空；如需区分本地记录可填代号"
+        },
+        {
+          "id": "q6_phone",
+          "type": "tel",
+          "required": false,
+          "label": "考生电话（选填，本地推荐不需要）",
+          "placeholder": "可留空；本项目不发送通知"
+        },
+        {
+          "id": "q7_parent_name",
+          "type": "text",
+          "required": false,
+          "label": "家长称呼（选填，可使用昵称）",
+          "placeholder": "可留空"
+        },
+        {
+          "id": "q8_parent_phone",
+          "type": "tel",
+          "required": false,
+          "label": "家长电话（选填）",
+          "placeholder": "可留空"
+        },
+        {
+          "id": "q8b_student_type",
+          "type": "radio",
+          "required": true,
+          "label": "你是应届生还是复读生",
+          "options": [
+            "应届",
+            "复读（第1年）",
+            "复读（第2年及以上）"
+          ],
+          "note": "部分专项计划和院校专业对应届生/复读生有不同政策"
+        },
+        {
+          "id": "q8c_political_status",
+          "type": "radio",
+          "required": true,
+          "label": "政治面貌",
+          "options": [
+            "中共党员",
+            "中共预备党员",
+            "共青团员",
+            "群众"
+          ],
+          "note": "军校、警校及特定专业对政治面貌有要求"
+        }
+      ]
+    },
+    {
+      "id": "health_screening",
+      "title": "二、身体健康（影响录取资格，如实填写）",
+      "description": "根据《普通高等学校招生体检工作指导意见》，部分专业对色觉、视力等有硬性限制",
+      "questions": [
+        {
+          "id": "q9_color_vision",
+          "type": "radio",
+          "required": true,
+          "label": "色觉情况",
+          "options": [
+            "无色盲色弱",
+            "轻度色弱（部分专业受限）",
+            "色盲（多项专业受限）",
+            "红绿色盲（多项专业受限）",
+            "不清楚"
+          ],
+          "note": "色盲不能报考化学、医学、生物、测绘、美术等专业"
+        },
+        {
+          "id": "q10_vision",
+          "type": "radio",
+          "required": true,
+          "label": "视力情况",
+          "options": [
+            "视力正常",
+            "近视但矫正后达标",
+            "矫正后仍不达标",
+            "不清楚"
+          ],
+          "note": "军校、飞行技术等专业对视力有要求"
+        },
+        {
+          "id": "q11_hearing",
+          "type": "radio",
+          "required": true,
+          "label": "听力情况",
+          "options": [
+            "正常",
+            "轻度受限",
+            "中度受限",
+            "重度受限",
+            "不清楚"
+          ],
+          "note": "部分专业对听力有要求"
+        },
+        {
+          "id": "q11b_smell",
+          "type": "radio",
+          "required": true,
+          "label": "嗅觉情况",
+          "options": [
+            "正常",
+            "迟钝",
+            "不清楚"
+          ],
+          "note": "嗅觉迟钝不能报考食品科学、药学等专业"
+        },
+        {
+          "id": "q11c_height",
+          "type": "number",
+          "required": true,
+          "label": "身高（cm）",
+          "placeholder": "请输入身高，如：175",
+          "hint": "军校男≥162cm/女≥160cm，飞行技术男≥168cm"
+        },
+        {
+          "id": "q11d_weight",
+          "type": "number",
+          "required": true,
+          "label": "体重（kg）",
+          "placeholder": "请输入体重，如：65",
+          "hint": "部分专业有BMI要求"
+        },
+        {
+          "id": "q11e_tattoo",
+          "type": "radio",
+          "required": true,
+          "label": "是否有纹身",
+          "options": [
+            "无",
+            "有（不影响报考）",
+            "有（可能影响军警校报考）"
+          ],
+          "note": "军校、警校等对纹身有严格限制"
+        }
+      ]
+    },
+    {
+      "id": "exam_results",
+      "title": "三、高考情况",
+      "description": "用于位次匹配和录取概率计算",
+      "questions": [
+        {
+          "id": "q12_total_score",
+          "type": "number",
+          "required": true,
+          "label": "高考总分",
+          "placeholder": "满分750分，请输入0-750之间的数字",
+          "hint": "如：580"
+        },
+        {
+          "id": "q13_rank",
+          "type": "number",
+          "required": true,
+          "label": "一分一段表排名",
+          "placeholder": "请输入全省位次",
+          "hint": "从一分一段表查找，如：15000"
+        },
+        {
+          "id": "q14_category",
+          "type": "radio",
+          "required": true,
+          "label": "科类",
+          "options": [
+            "历史类"
+          ],
+          "note": "新高考（2025年起）：历史类=原文科"
+        },
+        {
+          "id": "q15_subject_combo",
+          "type": "radio",
+          "required": true,
+          "label": "选考科目组合",
+          "options": [
+            "历史+政治+地理",
+            "历史+政治+生物",
+            "历史+地理+生物",
+            "历史+政治+地理+生物",
+            "其他组合"
+          ],
+          "note": "需与高考报名信息完全一致"
+        },
+        {
+          "id": "q16_foreign_language",
+          "type": "radio",
+          "required": true,
+          "label": "高考外语科目",
+          "options": [
+            "英语",
+            "日语",
+            "俄语",
+            "法语",
+            "德语",
+            "西班牙语",
+            "其他"
+          ],
+          "note": "部分专业（如英语、国际贸易、部分中外合作）只招收英语考生"
+        }
+      ]
+    },
+    {
+      "id": "subject_abilities",
+      "title": "四、学科能力评估",
+      "description": "用于专业匹配和性格倾向分析",
+      "questions": [
+        {
+          "id": "q17_chinese_score",
+          "type": "number",
+          "required": true,
+          "label": "语文实考分",
+          "placeholder": "请输入语文分数"
+        },
+        {
+          "id": "q18_chinese_rank_pct",
+          "type": "radio",
+          "required": true,
+          "label": "语文省排名百分比",
+          "options": [
+            "前10%（1-10%）",
+            "11-30%",
+            "31-50%",
+            "51-70%",
+            "71-100%"
+          ]
+        },
+        {
+          "id": "q19_chinese_logic",
+          "type": "radio",
+          "required": true,
+          "label": "语文逻辑思维",
+          "options": [
+            "很强",
+            "较强",
+            "一般",
+            "较弱",
+            "很弱"
+          ]
+        },
+        {
+          "id": "q20_chinese_creative",
+          "type": "radio",
+          "required": true,
+          "label": "语文创新思维",
+          "options": [
+            "很强",
+            "较强",
+            "一般",
+            "较弱",
+            "很弱"
+          ]
+        },
+        {
+          "id": "q21_chinese_detail",
+          "type": "radio",
+          "required": true,
+          "label": "语文细节处理",
+          "options": [
+            "很强",
+            "较强",
+            "一般",
+            "较弱",
+            "很弱"
+          ]
+        },
+        {
+          "id": "q22_math_score",
+          "type": "number",
+          "required": true,
+          "label": "数学实考分",
+          "placeholder": "请输入数学分数"
+        },
+        {
+          "id": "q23_math_rank_pct",
+          "type": "radio",
+          "required": true,
+          "label": "数学省排名百分比",
+          "options": [
+            "前10%（1-10%）",
+            "11-30%",
+            "31-50%",
+            "51-70%",
+            "71-100%"
+          ]
+        },
+        {
+          "id": "q24_math_logic",
+          "type": "radio",
+          "required": true,
+          "label": "数学逻辑思维",
+          "options": [
+            "很强",
+            "较强",
+            "一般",
+            "较弱",
+            "很弱"
+          ]
+        },
+        {
+          "id": "q25_math_creative",
+          "type": "radio",
+          "required": true,
+          "label": "数学创新思维",
+          "options": [
+            "很强",
+            "较强",
+            "一般",
+            "较弱",
+            "很弱"
+          ]
+        },
+        {
+          "id": "q26_math_detail",
+          "type": "radio",
+          "required": true,
+          "label": "数学细节处理",
+          "options": [
+            "很强",
+            "较强",
+            "一般",
+            "较弱",
+            "很弱"
+          ]
+        },
+        {
+          "id": "q27_english_score",
+          "type": "number",
+          "required": true,
+          "label": "英语实考分",
+          "placeholder": "请输入英语分数"
+        },
+        {
+          "id": "q28_english_rank_pct",
+          "type": "radio",
+          "required": true,
+          "label": "英语省排名百分比",
+          "options": [
+            "前10%（1-10%）",
+            "11-30%",
+            "31-50%",
+            "51-70%",
+            "71-100%"
+          ]
+        },
+        {
+          "id": "q29_english_logic",
+          "type": "radio",
+          "required": true,
+          "label": "英语逻辑思维",
+          "options": [
+            "很强",
+            "较强",
+            "一般",
+            "较弱",
+            "很弱"
+          ]
+        },
+        {
+          "id": "q30_english_creative",
+          "type": "radio",
+          "required": true,
+          "label": "英语创新思维",
+          "options": [
+            "很强",
+            "较强",
+            "一般",
+            "较弱",
+            "很弱"
+          ]
+        },
+        {
+          "id": "q31_english_detail",
+          "type": "radio",
+          "required": true,
+          "label": "英语细节处理",
+          "options": [
+            "很强",
+            "较强",
+            "一般",
+            "较弱",
+            "很弱"
+          ]
+        },
+        {
+          "id": "q32_history_score",
+          "type": "number",
+          "required": true,
+          "label": "历史实考分",
+          "placeholder": "请输入历史分数"
+        },
+        {
+          "id": "q33_politics_score",
+          "type": "number",
+          "required": true,
+          "label": "政治实考分",
+          "placeholder": "请输入政治分数"
+        },
+        {
+          "id": "q34_geography_score",
+          "type": "number",
+          "required": true,
+          "label": "地理实考分",
+          "placeholder": "请输入地理分数"
+        },
+        {
+          "id": "q35_advantage_1",
+          "type": "radio",
+          "required": true,
+          "label": "第一优势学科",
+          "options": [
+            "语文",
+            "数学",
+            "英语",
+            "历史",
+            "政治",
+            "地理"
+          ]
+        },
+        {
+          "id": "q36_advantage_2",
+          "type": "radio",
+          "required": true,
+          "label": "第二优势学科",
+          "options": [
+            "语文",
+            "数学",
+            "英语",
+            "历史",
+            "政治",
+            "地理"
+          ]
+        },
+        {
+          "id": "q37_competitions",
+          "type": "checkbox",
+          "required": true,
+          "label": "曾参与竞赛类型",
+          "options": [
+            "数学竞赛",
+            "英语竞赛",
+            "作文竞赛",
+            "历史竞赛",
+            "政治竞赛",
+            "地理竞赛",
+            "辩论赛",
+            "模联竞赛",
+            "无"
+          ]
+        },
+        {
+          "id": "q38_focus_area",
+          "type": "checkbox",
+          "required": true,
+          "label": "高中阶段主攻方向",
+          "options": [
+            "文科强化",
+            "英语强化",
+            "竞赛培优",
+            "艺术特长",
+            "体育特长",
+            "综合素质",
+            "其他"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "family_background",
+      "title": "五、家庭背景",
+      "description": "用于经济能力评估和资源匹配",
+      "questions": [
+        {
+          "id": "q39_parent_education",
+          "type": "radio",
+          "required": true,
+          "label": "父母最高学历",
+          "options": [
+            "初中及以下",
+            "高中/中专",
+            "大专",
+            "本科",
+            "硕士",
+            "博士"
+          ]
+        },
+        {
+          "id": "q40_parent_occupation",
+          "type": "radio",
+          "required": true,
+          "label": "家长职业领域",
+          "options": [
+            "公务员/事业单位",
+            "企业高管",
+            "技术人员",
+            "教师",
+            "医生",
+            "个体经营",
+            "自由职业",
+            "农民",
+            "其他"
+          ]
+        },
+        {
+          "id": "q41_family_resources",
+          "type": "checkbox",
+          "required": true,
+          "label": "家庭社会资源",
+          "options": [
+            "政府机关人脉",
+            "高校/科研院所",
+            "医疗机构",
+            "企业资源",
+            "金融资源",
+            "法律资源",
+            "文化传媒",
+            "无特殊资源"
+          ]
+        },
+        {
+          "id": "q42_family_location",
+          "type": "radio",
+          "required": true,
+          "label": "家庭常住地",
+          "options": [
+            "一线城市",
+            "新一线城市",
+            "二线城市",
+            "三线城市",
+            "县城",
+            "乡镇",
+            "农村"
+          ]
+        },
+        {
+          "id": "q43_total_budget",
+          "type": "radio",
+          "required": true,
+          "label": "家长可接受的大学年度总费用（含学费+住宿费+生活费）",
+          "options": [
+            "2万元以内",
+            "2-4万元",
+            "4-6万元",
+            "6-10万元",
+            "10-15万元",
+            "15万元以上"
+          ],
+          "note": "公立大学通常2-4万/年，中外合作办学5-15万/年"
+        },
+        {
+          "id": "q43b_sino_foreign",
+          "type": "radio",
+          "required": true,
+          "label": "是否考虑中外合作办学项目（学费5-15万/年，部分院校2+2或3+1模式）",
+          "options": [
+            "愿意考虑",
+            "视学校和专业而定",
+            "不考虑"
+          ],
+          "note": "中外合作项目录取分数通常略低，但学费较高"
+        },
+        {
+          "id": "q43c_private_college",
+          "type": "radio",
+          "required": true,
+          "label": "是否考虑民办院校/独立学院（学费2-5万/年）",
+          "options": [
+            "愿意考虑",
+            "视专业而定",
+            "不考虑"
+          ],
+          "note": "民办院校录取分数通常低于同层次公办院校"
+        },
+        {
+          "id": "q44_political_review",
+          "type": "radio",
+          "required": true,
+          "label": "是否计划报考需要政审的院校（军校、警校、定向士官等）",
+          "options": [
+            "是，计划报考",
+            "在考虑中",
+            "不计划报考"
+          ],
+          "note": "军校需三代直系亲属无刑事处罚记录，警校需两代。如计划报考，请在下一题如实填写亲属情况"
+        },
+        {
+          "id": "q44a_criminal_record",
+          "type": "radio",
+          "required": true,
+          "label": "直系亲属（父母、祖父母、外祖父母）是否有刑事处罚记录",
+          "options": [
+            "无",
+            "有（如计划报考军警校，可能影响政审）",
+            "不清楚"
+          ],
+          "note": "仅用于军警校报考参考，不影响其他院校推荐"
+        },
+        {
+          "id": "q44b_special_plan_eligibility",
+          "type": "checkbox",
+          "required": true,
+          "label": "专项计划资格（满足条件的可勾选）",
+          "options": [
+            "国家专项计划（实施区域农村户籍）",
+            "地方专项计划（实施区域连续3年户籍）",
+            "高校专项计划（边远/贫困/民族县农村户籍+3年学籍）",
+            "均不符合",
+            "不清楚"
+          ],
+          "note": "请先确认户籍/学籍资格再决定是否报考，具体以当地招考院通知为准"
+        }
+      ]
+    },
+    {
+      "id": "volunteer_preferences",
+      "title": "六、志愿偏好",
+      "description": "用于院校筛选和专业推荐",
+      "questions": [
+        {
+          "id": "q45_special_schools",
+          "type": "checkbox",
+          "required": true,
+          "label": "报考特殊类型院校",
+          "options": [
+            "军事院校",
+            "公安警校",
+            "免费师范生（部属）",
+            "公费师范生（省属）",
+            "定向医学生",
+            "民族班（少数民族考生）",
+            "都不考虑"
+          ],
+          "note": "军事院校/公安警校需政审+体检；师范生/定向医学生有服务期要求；民族班仅限少数民族考生"
+        },
+        {
+          "id": "q46_core_demand",
+          "type": "radio",
+          "required": true,
+          "label": "对所报志愿核心诉求",
+          "options": [
+            "学校名气优先（985/211/双一流）",
+            "专业实力优先",
+            "城市地域优先",
+            "就业率优先",
+            "学费低廉优先",
+            "离家近优先",
+            "综合平衡"
+          ]
+        },
+        {
+          "id": "q47_civil_service",
+          "type": "radio",
+          "required": true,
+          "label": "是否要保留考公务员的机会",
+          "options": [
+            "必须保留",
+            "优先考虑",
+            "无所谓",
+            "不考虑"
+          ]
+        },
+        {
+          "id": "q48_target_industries",
+          "type": "checkbox",
+          "required": true,
+          "label": "目标行业",
+          "options": [
+            "信息技术/互联网",
+            "金融/银行",
+            "教育/培训",
+            "医疗/健康",
+            "法律/政务",
+            "传媒/艺术",
+            "出版/文博",
+            "社会服务/NGO",
+            "其他"
+          ]
+        },
+        {
+          "id": "q49_medical_preference",
+          "type": "radio",
+          "required": true,
+          "label": "是否学医",
+          "options": [
+            "非常愿意",
+            "可以考虑",
+            "不确定",
+            "不太愿意",
+            "绝对不考虑"
+          ]
+        },
+        {
+          "id": "q50_teacher_preference",
+          "type": "radio",
+          "required": true,
+          "label": "是否当老师",
+          "options": [
+            "非常愿意",
+            "可以考虑",
+            "不确定",
+            "不太愿意",
+            "绝对不考虑"
+          ]
+        },
+        {
+          "id": "q50b_agriculture_preference",
+          "type": "radio",
+          "required": true,
+          "label": "是否学农",
+          "options": [
+            "非常愿意",
+            "可以考虑",
+            "不确定",
+            "不太愿意",
+            "绝对不考虑"
+          ]
+        },
+        {
+          "id": "q51_acceptable_majors",
+          "type": "checkbox",
+          "required": true,
+          "label": "可以接受的专业类别",
+          "options": [
+            "文学类",
+            "历史学类",
+            "哲学类",
+            "经济学类",
+            "管理学类",
+            "法学类",
+            "教育学类",
+            "艺术学类",
+            "农学类",
+            "交叉学科"
+          ]
+        },
+        {
+          "id": "q52_vertical_majors",
+          "type": "checkbox",
+          "required": true,
+          "label": "你感兴趣的具体专业方向（可多选）",
+          "options": [
+            "中国语言文学类",
+            "新闻传播学类",
+            "外语类",
+            "历史学类",
+            "哲学类",
+            "法学类",
+            "社会学类",
+            "教育学类",
+            "心理学类",
+            "经济学类",
+            "工商管理类",
+            "行政管理类",
+            "旅游管理类",
+            "设计学类",
+            "音乐与舞蹈学类",
+            "戏剧与影视学类",
+            "都不考虑"
+          ],
+          "note": "按教育部《普通高等学校本科专业目录》分类"
+        },
+        {
+          "id": "q53_history_achievement",
+          "type": "radio",
+          "required": true,
+          "label": "你的历史成绩如何",
+          "options": [
+            "历史很好",
+            "历史较好",
+            "历史一般",
+            "历史较差",
+            "历史很差"
+          ]
+        },
+        {
+          "id": "q54_history_willingness",
+          "type": "radio",
+          "required": true,
+          "label": "是否愿意在大学继续学习与历史相关的内容",
+          "options": [
+            "非常愿意",
+            "可以考虑",
+            "不确定",
+            "不太愿意",
+            "绝对不考虑"
+          ]
+        },
+        {
+          "id": "q55_foreign_language_achievement",
+          "type": "radio",
+          "required": true,
+          "label": "你的外语成绩如何（含小语种）",
+          "options": [
+            "外语很好",
+            "外语较好",
+            "外语一般",
+            "外语较差",
+            "外语很差"
+          ]
+        },
+        {
+          "id": "q56_foreign_language_willingness",
+          "type": "radio",
+          "required": true,
+          "label": "是否愿意在大学继续学习外语相关专业",
+          "options": [
+            "非常愿意",
+            "可以考虑",
+            "不确定",
+            "不太愿意",
+            "绝对不考虑"
+          ]
+        },
+        {
+          "id": "q56b_major_adjustment_attitude",
+          "type": "radio",
+          "required": true,
+          "label": "若被录取到不喜欢/不了解的专业，你的态度",
+          "options": [
+            "接受并努力学好",
+            "先学着看，找机会转专业",
+            "会尝试复读或重新填报志愿"
+          ],
+          "note": "服从调剂可能被分配到非首选专业，需提前了解转专业政策"
+        },
+        {
+          "id": "q57_province_preference",
+          "type": "radio",
+          "required": true,
+          "label": "大学就读地域偏好",
+          "options": [
+            "必须留在云南",
+            "优先省内，省外也可以",
+            "优先出省",
+            "只想去特定地区（请注明）",
+            "无所谓，看学校和专业"
+          ],
+          "note": "影响志愿池的省内/省外院校比例"
+        },
+        {
+          "id": "q57b_strong_base",
+          "type": "checkbox",
+          "required": true,
+          "label": "特殊招生路径意愿",
+          "options": [
+            "强基计划（985院校基础学科，本硕博贯通培养）",
+            "综合评价招生（高考+校测+学业水平综合录取）",
+            "均不了解",
+            "均不考虑"
+          ],
+          "note": "强基计划和综合评价是高分段考生进入985院校的重要路径，需在高考前报名"
+        },
+        {
+          "id": "q57c_collection_volunteer",
+          "type": "radio",
+          "required": true,
+          "label": "如果正常批次未被录取，是否愿意参加征集志愿（补录）",
+          "options": [
+            "愿意，优先补录",
+            "愿意，但只看特定学校/专业",
+            "不愿意，直接考虑下一批次"
+          ]
+        },
+        {
+          "id": "q57d_intention_note",
+          "type": "text",
+          "required": true,
+          "label": "你是否有已经确定的意向院校或专业？（选填，如已有明确目标请填写）",
+          "placeholder": "如：我想学师范/我想去成都/我家里有教育系统等资源",
+          "note": "开放题，你的自由表述将直接影响推荐策略"
+        }
+      ]
+    },
+    {
+      "id": "career_tendency",
+      "title": "七、职业倾向",
+      "description": "了解你偏好的工作环境和职业价值；项目自编 RIASEC 风格兴趣问卷另行展示，结果仅作方向参考",
+      "questions": [
+        {
+          "id": "q58_ideal_workday",
+          "type": "checkbox",
+          "required": true,
+          "label": "请选择3个最能描述你「理想工作日」的场景",
+          "options": [
+            "在教室讲课",
+            "在办公室写文档/报告",
+            "在会议室开会讨论",
+            "在医院看病人",
+            "在画室/工作室创作",
+            "在法庭辩论",
+            "在银行处理业务",
+            "在网上直播/自媒体",
+            "在图书馆/档案馆工作",
+            "在电视台/报社工作",
+            "在政府机关办公",
+            "其他"
+          ],
+          "max_select": 3
+        },
+        {
+          "id": "q59_unacceptable_work",
+          "type": "radio",
+          "required": true,
+          "label": "你最不能接受的工作状态",
+          "options": [
+            "长期出差",
+            "加班频繁",
+            "夜班/轮班",
+            "单调重复",
+            "高压竞争",
+            "收入不稳定",
+            "社交过多",
+            "孤立无援"
+          ]
+        },
+        {
+          "id": "q60_ethics_dilemma",
+          "type": "radio",
+          "required": true,
+          "label": "一份工作需要经常处理灰色地带（如合规但道德上有争议的业务），你的态度",
+          "options": [
+            "可以接受，工作就是工作",
+            "看具体行业和公司文化",
+            "会比较在意，尽量选择合规透明的公司",
+            "完全不能接受，会避开这类行业"
+          ]
+        },
+        {
+          "id": "q61_stability_preference",
+          "type": "radio",
+          "required": true,
+          "label": "对「铁饭碗」的看法",
+          "options": [
+            "完全不想",
+            "不太想",
+            "无所谓",
+            "比较渴望",
+            "非常渴望"
+          ]
+        },
+        {
+          "id": "q62_tech_iteration",
+          "type": "radio",
+          "required": true,
+          "label": "你更喜欢哪种工作节奏",
+          "options": [
+            "变化快、需要不断学习新技能（如互联网/AI）",
+            "稳步发展、有规律可循（如医疗/金融）",
+            "相对固定、按部就班（如教育/文化）",
+            "基本稳定、传统工艺（如制造/手工业）"
+          ]
+        },
+        {
+          "id": "q63_location_preference",
+          "type": "radio",
+          "required": true,
+          "label": "职业地域倾向",
+          "options": [
+            "一线城市（北上广深）",
+            "新一线城市（成都/杭州/武汉等）",
+            "二线城市",
+            "家乡所在省",
+            "无所谓，看机会"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "university_life",
+      "title": "八、大学生活期待",
+      "description": "用于院校文化和学习环境匹配",
+      "questions": [
+        {
+          "id": "q64_ideal_university",
+          "type": "checkbox",
+          "required": true,
+          "label": "理想大学生活场景（选3项）",
+          "options": [
+            "参加学术讲座",
+            "加入社团活动",
+            "实习/兼职",
+            "考研/保研准备",
+            "出国交换",
+            "创业实践",
+            "志愿服务",
+            "体育竞技",
+            "艺术表演",
+            "图书馆自习",
+            "其他"
+          ],
+          "max_select": 3
+        },
+        {
+          "id": "q65_dormitory_expectation",
+          "type": "radio",
+          "required": true,
+          "label": "对「大学集体生活」的期待",
+          "options": [
+            "非常期待，喜欢社交",
+            "比较期待，希望交朋友",
+            "一般，无所谓",
+            "不太期待，喜欢独处",
+            "完全不期待"
+          ]
+        },
+        {
+          "id": "q66_minor_attitude",
+          "type": "radio",
+          "required": true,
+          "label": "对「跨专业选课/辅修」的态度",
+          "options": [
+            "非常愿意，想学更多",
+            "可以考虑",
+            "无所谓",
+            "不太愿意，专注本专业",
+            "绝对不愿意"
+          ]
+        },
+        {
+          "id": "q67_further_study",
+          "type": "checkbox",
+          "required": true,
+          "label": "未来深造意向",
+          "options": [
+            "国内保研",
+            "国内考研",
+            "出国读研",
+            "直接就业",
+            "考公务员",
+            "考事业单位",
+            "创业",
+            "自由职业"
+          ]
+        },
+        {
+          "id": "q68_parent_support",
+          "type": "checkbox",
+          "required": true,
+          "label": "家长对深造的支持",
+          "options": [
+            "全力支持保研",
+            "全力支持考研",
+            "全力支持出国",
+            "支持就业",
+            "支持考公",
+            "尊重孩子选择"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stress_assessment",
+      "title": "九、压力评估",
+      "description": "用于心理状态评估和推荐策略调整",
+      "questions": [
+        {
+          "id": "q69_stress_tolerance",
+          "type": "radio",
+          "required": true,
+          "label": "你能接受的学习/工作压力水平",
+          "options": [
+            "能适应很高强度的压力（高强度竞争环境）",
+            "能适应较高压力",
+            "能适应中等压力",
+            "只能适应较低压力",
+            "偏好低压稳定环境"
+          ]
+        },
+        {
+          "id": "q70_exam_state",
+          "type": "radio",
+          "required": true,
+          "label": "面对重大考试/决策时的状态",
+          "options": [
+            "非常紧张，发挥失常",
+            "比较紧张，但能发挥",
+            "正常发挥",
+            "越战越勇，超常发挥",
+            "完全放松，无所谓"
+          ]
+        },
+        {
+          "id": "q71_major_changes",
+          "type": "checkbox",
+          "required": true,
+          "label": "高三是否经历生活变化",
+          "options": [
+            "转学/转班",
+            "家庭变故",
+            "健康问题",
+            "情感波动",
+            "换老师",
+            "无重大变化"
+          ]
+        },
+        {
+          "id": "q72_stress_coping",
+          "type": "checkbox",
+          "required": true,
+          "label": "压力应对方式",
+          "options": [
+            "运动/健身",
+            "听音乐/看电影",
+            "与朋友聊天",
+            "与父母沟通",
+            "写日记/冥想",
+            "玩游戏/刷手机",
+            "暴饮暴食",
+            "自我封闭",
+            "寻求专业帮助"
+          ]
+        },
+        {
+          "id": "q73_change_impact",
+          "type": "radio",
+          "required": true,
+          "label": "生活变化对学习状态的影响",
+          "options": [
+            "正面影响，成绩反而提升",
+            "严重影响，成绩大幅下降",
+            "较大影响，成绩波动",
+            "一般影响，短期波动",
+            "较小影响，快速恢复",
+            "无影响"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decision_analysis",
+      "title": "十、决策分析",
+      "description": "用于家庭决策协调和推荐策略调整",
+      "questions": [
+        {
+          "id": "q74_peer_influence",
+          "type": "radio",
+          "required": true,
+          "label": "同学/朋友的志愿选择对你的影响",
+          "options": [
+            "很大影响，想和同学一起",
+            "有一定影响",
+            "一般",
+            "较小影响",
+            "完全不受影响"
+          ]
+        },
+        {
+          "id": "q75_decision_control",
+          "type": "radio",
+          "required": true,
+          "label": "你对本次志愿填报的决策控制权",
+          "options": [
+            "完全自己决定",
+            "自己决定，参考家长意见",
+            "家长和自己共同决定",
+            "家长决定，自己参考",
+            "完全家长决定"
+          ]
+        },
+        {
+          "id": "q76_conflict_scenario",
+          "type": "radio",
+          "required": true,
+          "label": "假设你和家长在选择上产生分歧，你的选择",
+          "options": [
+            "坚持兴趣，不听家长",
+            "尝试沟通，寻求折中",
+            "听从家长，放弃兴趣",
+            "寻求第三方帮助（老师/咨询师）"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subject_self_efficacy",
+      "title": "十一、学科自我评价问卷（项目自编）",
+      "description": "了解你对各学科学习的自信心程度，这影响你在大学的学习动力和专业适应性。请根据实际情况选择（1=非常不符合，5=非常符合）",
+      "questions": [
+        {
+          "id": "q77_se_cn1",
+          "type": "radio",
+          "required": true,
+          "label": "语文 — 遇到阅读理解难题时，我相信自己能找到突破口",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q78_se_cn2",
+          "type": "radio",
+          "required": true,
+          "label": "语文 — 我能写出有深度和逻辑的文章",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q79_se_cn3",
+          "type": "radio",
+          "required": true,
+          "label": "语文 — 我对古诗词和文学作品的理解能力有信心",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q80_se_cn4",
+          "type": "radio",
+          "required": true,
+          "label": "语文 — 我能在公开场合清晰表达自己的观点",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q81_se_cn5",
+          "type": "radio",
+          "required": true,
+          "label": "语文 — 我相信自己能学好需要大量阅读的专业课",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q82_se_mt1",
+          "type": "radio",
+          "required": true,
+          "label": "数学 — 遇到复杂的数学问题，我有信心一步步分析解决",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q83_se_mt2",
+          "type": "radio",
+          "required": true,
+          "label": "数学 — 我能把数学方法应用到实际问题中",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q84_se_mt3",
+          "type": "radio",
+          "required": true,
+          "label": "数学 — 我对逻辑推理和数据分析能力有信心",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q85_se_mt4",
+          "type": "radio",
+          "required": true,
+          "label": "数学 — 我相信自己能掌握大学基础数学课程",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q86_se_mt5",
+          "type": "radio",
+          "required": true,
+          "label": "数学 — 面对数据分析类任务，我有信心完成",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q87_se_en1",
+          "type": "radio",
+          "required": true,
+          "label": "英语 — 我能轻松阅读英文文章和文献",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q88_se_en2",
+          "type": "radio",
+          "required": true,
+          "label": "英语 — 我有信心用英语进行日常交流",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q89_se_en3",
+          "type": "radio",
+          "required": true,
+          "label": "英语 — 我相信自己能通过大学英语四六级考试",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q90_se_en4",
+          "type": "radio",
+          "required": true,
+          "label": "英语 — 我能用英语写出清晰的短文或报告",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q91_se_en5",
+          "type": "radio",
+          "required": true,
+          "label": "英语 — 我有信心在大学继续提升英语水平",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "career_values",
+      "title": "十二、职业价值偏好问卷（项目自编）",
+      "description": "了解你在未来职业中最看重什么，这将影响你的专业选择和职业发展方向。请根据实际情况选择（1=非常不符合，5=非常符合）",
+      "questions": [
+        {
+          "id": "q92_cv_income1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 收入水平",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我非常看重未来职业的薪酬待遇"
+        },
+        {
+          "id": "q93_cv_income2",
+          "type": "radio",
+          "required": true,
+          "label": "我愿意为高薪接受较大的工作压力",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q94_cv_stability1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 工作稳定",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我希望找到一份稳定的工作，不太担心失业风险"
+        },
+        {
+          "id": "q95_cv_stability2",
+          "type": "radio",
+          "required": true,
+          "label": "我宁愿选择收入一般但非常稳定的工作",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q96_cv_achievement1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 成就感",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我希望在工作中获得成就感和自我实现"
+        },
+        {
+          "id": "q97_cv_achievement2",
+          "type": "radio",
+          "required": true,
+          "label": "我愿意为追求职业成就而牺牲部分个人时间",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q98_cv_help1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 帮助他人",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我希望我的工作能帮助到他人或社会"
+        },
+        {
+          "id": "q99_cv_help2",
+          "type": "radio",
+          "required": true,
+          "label": "公益性质的工作对我很有吸引力",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q100_cv_creative1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 创造力",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我希望工作中有充分的创造和发挥空间"
+        },
+        {
+          "id": "q101_cv_creative2",
+          "type": "radio",
+          "required": true,
+          "label": "我不能接受每天做完全相同的工作内容",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q102_cv_balance1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 工作生活平衡",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我希望工作和生活能够平衡，不被工作占用太多个人时间"
+        },
+        {
+          "id": "q103_cv_balance2",
+          "type": "radio",
+          "required": true,
+          "label": "我优先考虑有充足个人时间的工作",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q104_cv_leadership1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 领导力",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我希望未来能带领团队或管理他人"
+        },
+        {
+          "id": "q105_cv_leadership2",
+          "type": "radio",
+          "required": true,
+          "label": "我享受在团队中担任决策者的角色",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q106_cv_autonomy1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 独立性",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我希望工作中有足够的自主决策权"
+        },
+        {
+          "id": "q107_cv_autonomy2",
+          "type": "radio",
+          "required": true,
+          "label": "我不喜欢被严格的管理制度约束",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q108_cv_location1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 地域偏好",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我希望在大城市工作发展"
+        },
+        {
+          "id": "q109_cv_location2",
+          "type": "radio",
+          "required": true,
+          "label": "为了理想的工作，我愿意搬到其他城市",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        },
+        {
+          "id": "q110_cv_learning1",
+          "type": "radio",
+          "required": true,
+          "label": "职业价值偏好 — 持续学习",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "note": "我希望工作中能持续学习和成长"
+        },
+        {
+          "id": "q111_cv_learning2",
+          "type": "radio",
+          "required": true,
+          "label": "如果一个职业没有成长空间，我不会选择",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "十三、大五维度偏好问卷（项目自编）",
+      "description": "请凭直觉作答，没有标准答案；未经心理测量学验证，不作心理诊断",
+      "questions": [
+        {
+          "id": "bf01",
+          "type": "radio",
+          "required": true,
+          "label": "开放性 — 我喜欢探索新想法和不同的看法",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 1,
+            "dim": "O",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf02",
+          "type": "radio",
+          "required": true,
+          "label": "开放性 — 艺术、音乐或文学常常打动我",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 2,
+            "dim": "O",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf03",
+          "type": "radio",
+          "required": true,
+          "label": "开放性 — 我愿意尝试不熟悉的食物或体验",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 3,
+            "dim": "O",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf04",
+          "type": "radio",
+          "required": true,
+          "label": "开放性 — 我对哲学或抽象议题感兴趣",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 4,
+            "dim": "O",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf05",
+          "type": "radio",
+          "required": true,
+          "label": "开放性 — 我喜欢动手尝试解决新问题",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 5,
+            "dim": "O",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf06",
+          "type": "radio",
+          "required": true,
+          "label": "开放性 — 我喜欢思考\"如果换一种做法会怎样\"",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 6,
+            "dim": "O",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf07",
+          "type": "radio",
+          "required": true,
+          "label": "开放性【反向】 — 我更喜欢按惯例做事，避免变动",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 7,
+            "dim": "O",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf08",
+          "type": "radio",
+          "required": true,
+          "label": "开放性【反向】 — 抽象的话题对我来说没有吸引力",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 8,
+            "dim": "O",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf09",
+          "type": "radio",
+          "required": true,
+          "label": "开放性 — 我会主动了解不同文化或行业的知识",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 9,
+            "dim": "O",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf10",
+          "type": "radio",
+          "required": true,
+          "label": "开放性 — 我喜欢创造性的活动（写作/设计/艺术等）",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 10,
+            "dim": "O",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf11",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性 — 我会把任务彻底完成，不留尾巴",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 11,
+            "dim": "C",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf12",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性 — 我倾向于提前规划而不是临时应对",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 12,
+            "dim": "C",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf13",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性 — 我重视秩序，物品归位让我安心",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 13,
+            "dim": "C",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf14",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性 — 我守时，承诺的事会按期完成",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 14,
+            "dim": "C",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf15",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性 — 面对长远目标我能保持耐心和坚持",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 15,
+            "dim": "C",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf16",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性【反向】 — 我容易拖延或半途而废",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 16,
+            "dim": "C",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf17",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性 — 我做决定前喜欢权衡利弊",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 17,
+            "dim": "C",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf18",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性【反向】 — 我有时会忽略细节、马虎处理",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 18,
+            "dim": "C",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf19",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性 — 我能严格自律，控制冲动",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 19,
+            "dim": "C",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf20",
+          "type": "radio",
+          "required": true,
+          "label": "尽责性 — 我倾向于按计划行事，按部就班",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 20,
+            "dim": "C",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf21",
+          "type": "radio",
+          "required": true,
+          "label": "外向性 — 我喜欢和很多人一起参加活动",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 21,
+            "dim": "E",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf22",
+          "type": "radio",
+          "required": true,
+          "label": "外向性 — 在群体中我容易主动开口、活跃气氛",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 22,
+            "dim": "E",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf23",
+          "type": "radio",
+          "required": true,
+          "label": "外向性 — 我精力充沛，喜欢忙碌的节奏",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 23,
+            "dim": "E",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf24",
+          "type": "radio",
+          "required": true,
+          "label": "外向性 — 我容易结识新朋友",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 24,
+            "dim": "E",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf25",
+          "type": "radio",
+          "required": true,
+          "label": "外向性 — 我喜欢成为团队中受关注的人",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 25,
+            "dim": "E",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf26",
+          "type": "radio",
+          "required": true,
+          "label": "外向性 — 社交活动会让我感到充电而不是疲惫",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 26,
+            "dim": "E",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf27",
+          "type": "radio",
+          "required": true,
+          "label": "外向性【反向】 — 我更喜欢独处或小范围交流",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 27,
+            "dim": "E",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf28",
+          "type": "radio",
+          "required": true,
+          "label": "外向性【反向】 — 在陌生场合我会显得比较安静",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 28,
+            "dim": "E",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf29",
+          "type": "radio",
+          "required": true,
+          "label": "外向性 — 我习惯先表达想法，再细致斟酌",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 29,
+            "dim": "E",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf30",
+          "type": "radio",
+          "required": true,
+          "label": "外向性 — 我喜欢热闹、节奏快的环境",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 30,
+            "dim": "E",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf31",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性 — 我习惯先体谅别人的处境",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 31,
+            "dim": "A",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf32",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性 — 我相信大多数人本质上是善意的",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 32,
+            "dim": "A",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf33",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性 — 我愿意帮别人，即使没有回报",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 33,
+            "dim": "A",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf34",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性 — 面对冲突我倾向于先寻求和解",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 34,
+            "dim": "A",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf35",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性 — 我会主动让步以维护团队和谐",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 35,
+            "dim": "A",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf36",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性 — 我对他人的情绪比较敏感",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 36,
+            "dim": "A",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf37",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性【反向】 — 我对别人会保持戒备和怀疑",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 37,
+            "dim": "A",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf38",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性【反向】 — 我倾向于直接指出对方的问题",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 38,
+            "dim": "A",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf39",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性 — 我能耐心倾听别人的倾诉",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 39,
+            "dim": "A",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf40",
+          "type": "radio",
+          "required": true,
+          "label": "宜人性 — 我重视集体利益高于个人喜好",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 40,
+            "dim": "A",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf41",
+          "type": "radio",
+          "required": true,
+          "label": "神经质 — 我容易感到紧张或焦虑",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 41,
+            "dim": "N",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf42",
+          "type": "radio",
+          "required": true,
+          "label": "神经质 — 我的情绪起伏比较明显",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 42,
+            "dim": "N",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf43",
+          "type": "radio",
+          "required": true,
+          "label": "神经质 — 小事也会让我心烦很久",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 43,
+            "dim": "N",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf44",
+          "type": "radio",
+          "required": true,
+          "label": "神经质 — 我经常担心事情会出错",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 44,
+            "dim": "N",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf45",
+          "type": "radio",
+          "required": true,
+          "label": "神经质 — 压力大时我容易感到无力",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 45,
+            "dim": "N",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf46",
+          "type": "radio",
+          "required": true,
+          "label": "神经质 — 别人的批评会让我难过较长时间",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 46,
+            "dim": "N",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf47",
+          "type": "radio",
+          "required": true,
+          "label": "神经质【反向】 — 即使遇到困难我也能保持冷静",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 47,
+            "dim": "N",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf48",
+          "type": "radio",
+          "required": true,
+          "label": "神经质【反向】 — 我能很快从负面情绪中恢复",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 48,
+            "dim": "N",
+            "reverse": true
+          }
+        },
+        {
+          "id": "bf49",
+          "type": "radio",
+          "required": true,
+          "label": "神经质 — 我有时会无来由地情绪低落",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 49,
+            "dim": "N",
+            "reverse": false
+          }
+        },
+        {
+          "id": "bf50",
+          "type": "radio",
+          "required": true,
+          "label": "神经质 — 面对未知我容易感到不安",
+          "options": [
+            "非常不符合",
+            "不太符合",
+            "不确定",
+            "比较符合",
+            "非常符合"
+          ],
+          "_meta": {
+            "scale": "big_five",
+            "item_no": 50,
+            "dim": "N",
+            "reverse": false
+          }
+        }
+      ]
+    },
+    {
+      "title": "十四、RIASEC 风格兴趣偏好问卷（项目自编，76 题）",
+      "description": "两项活动二选一，选择直觉上更想做的那一项",
+      "questions": [
+        {
+          "id": "h01",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 1/76）",
+          "options": [
+            "A. 动手维修机械或电子设备",
+            "B. 探究自然规律并提出假说"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 1,
+            "a_dim": "R",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h02",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 2/76）",
+          "options": [
+            "A. 在户外实地操作",
+            "B. 解一道复杂的数学题"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 2,
+            "a_dim": "R",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h03",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 3/76）",
+          "options": [
+            "A. 使用工具完成具体任务",
+            "B. 查阅资料分析现象的成因"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 3,
+            "a_dim": "R",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h04",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 4/76）",
+          "options": [
+            "A. 把零件组装成完整产品",
+            "B. 设计实验验证一个想法"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 4,
+            "a_dim": "R",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h05",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 5/76）",
+          "options": [
+            "A. 操控仪器或设备完成任务",
+            "B. 阅读学术论文获取新知"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 5,
+            "a_dim": "R",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h06",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 6/76）",
+          "options": [
+            "A. 从事需要体力或动手能力的工作",
+            "B. 在数据中寻找规律"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 6,
+            "a_dim": "R",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h07",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 7/76）",
+          "options": [
+            "A. 处理具体可见的成果",
+            "B. 推理一道逻辑题"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 7,
+            "a_dim": "R",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h08",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 8/76）",
+          "options": [
+            "A. 创作绘画、音乐或文学作品",
+            "B. 帮助同学解决学习困难"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 8,
+            "a_dim": "A",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h09",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 9/76）",
+          "options": [
+            "A. 设计独特的视觉作品",
+            "B. 倾听他人的烦恼并给出建议"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 9,
+            "a_dim": "A",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h10",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 10/76）",
+          "options": [
+            "A. 编排一段舞台表演",
+            "B. 志愿参与社区或公益活动"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 10,
+            "a_dim": "A",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h11",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 11/76）",
+          "options": [
+            "A. 为产品做创意设计",
+            "B. 辅导小朋友功课"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 11,
+            "a_dim": "A",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h12",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 12/76）",
+          "options": [
+            "A. 用文字表达自己的情感",
+            "B. 组织一次面向他人的活动"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 12,
+            "a_dim": "A",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h13",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 13/76）",
+          "options": [
+            "A. 探索新颖的艺术风格",
+            "B. 关心朋友的情绪并陪伴"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 13,
+            "a_dim": "A",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h14",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 14/76）",
+          "options": [
+            "A. 召集团队并分工合作",
+            "B. 整理数据并制作清晰报表"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 14,
+            "a_dim": "E",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h15",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 15/76）",
+          "options": [
+            "A. 在辩论或谈判中说服他人",
+            "B. 按流程精确完成事务性工作"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 15,
+            "a_dim": "E",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h16",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 16/76）",
+          "options": [
+            "A. 组织一次有目标的活动",
+            "B. 维护账目让收支清楚"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 16,
+            "a_dim": "E",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h17",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 17/76）",
+          "options": [
+            "A. 推广一个项目或产品",
+            "B. 把杂乱信息分类归档"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 17,
+            "a_dim": "E",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h18",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 18/76）",
+          "options": [
+            "A. 领导团队完成挑战",
+            "B. 按既定规则核对资料"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 18,
+            "a_dim": "E",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h19",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 19/76）",
+          "options": [
+            "A. 在商业谈判中争取共识",
+            "B. 为活动制定流程清单"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 19,
+            "a_dim": "E",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h20",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 20/76）",
+          "options": [
+            "A. 参与工程实施而非纸面方案",
+            "B. 即兴演奏或表演"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 20,
+            "a_dim": "R",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h21",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 21/76）",
+          "options": [
+            "A. 钻研机械原理并实际试验",
+            "B. 为活动设计创意主题"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 21,
+            "a_dim": "R",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h22",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 22/76）",
+          "options": [
+            "A. 搭建实物模型而非只画图",
+            "B. 通过作品传达想法"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 22,
+            "a_dim": "R",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h23",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 23/76）",
+          "options": [
+            "A. 在生产/制造现场工作",
+            "B. 尝试不同媒介进行创作"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 23,
+            "a_dim": "R",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h24",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 24/76）",
+          "options": [
+            "A. 修理日常物品让它继续可用",
+            "B. 改编经典作品赋予新意"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 24,
+            "a_dim": "R",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h25",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 25/76）",
+          "options": [
+            "A. 动手维修机械或电子设备",
+            "B. 设计图书或海报的视觉风格"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 25,
+            "a_dim": "R",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h26",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 26/76）",
+          "options": [
+            "A. 深入研究某个理论问题",
+            "B. 为团队设定明确目标"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 26,
+            "a_dim": "I",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h27",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 27/76）",
+          "options": [
+            "A. 钻研未解决的科学难题",
+            "B. 面向公众发表演讲"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 27,
+            "a_dim": "I",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h28",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 28/76）",
+          "options": [
+            "A. 用模型解释复杂现象",
+            "B. 在比赛中担任队长"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 28,
+            "a_dim": "I",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h29",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 29/76）",
+          "options": [
+            "A. 为问题构建分析框架",
+            "B. 为创业项目寻找资源"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 29,
+            "a_dim": "I",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h30",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 30/76）",
+          "options": [
+            "A. 把现象抽象成原理",
+            "B. 处理团队内部的冲突"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 30,
+            "a_dim": "I",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h31",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 31/76）",
+          "options": [
+            "A. 探究自然规律并提出假说",
+            "B. 在不确定环境中拍板决策"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 31,
+            "a_dim": "I",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h32",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 32/76）",
+          "options": [
+            "A. 为他人讲解知识",
+            "B. 检查文件中的细节错误"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 32,
+            "a_dim": "S",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h33",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 33/76）",
+          "options": [
+            "A. 在团体中协调成员关系",
+            "B. 建立条理化的记录系统"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 33,
+            "a_dim": "S",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h34",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 34/76）",
+          "options": [
+            "A. 为新成员提供入门指引",
+            "B. 执行重复但精确的核对工作"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 34,
+            "a_dim": "S",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h35",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 35/76）",
+          "options": [
+            "A. 陪伴老人或患者",
+            "B. 按规章制度处理事务"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 35,
+            "a_dim": "S",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h36",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 36/76）",
+          "options": [
+            "A. 在心理咨询场景中提供支持",
+            "B. 把项目分解为可执行步骤"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 36,
+            "a_dim": "S",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h37",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 37/76）",
+          "options": [
+            "A. 通过教育影响他人成长",
+            "B. 审核数据并标记异常"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 37,
+            "a_dim": "S",
+            "b_dim": "C"
+          }
+        },
+        {
+          "id": "h38",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 38/76）",
+          "options": [
+            "A. 在户外实地操作",
+            "B. 帮助同学解决学习困难"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 38,
+            "a_dim": "R",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h39",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 39/76）",
+          "options": [
+            "A. 使用工具完成具体任务",
+            "B. 倾听他人的烦恼并给出建议"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 39,
+            "a_dim": "R",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h40",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 40/76）",
+          "options": [
+            "A. 把零件组装成完整产品",
+            "B. 志愿参与社区或公益活动"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 40,
+            "a_dim": "R",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h41",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 41/76）",
+          "options": [
+            "A. 操控仪器或设备完成任务",
+            "B. 辅导小朋友功课"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 41,
+            "a_dim": "R",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h42",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 42/76）",
+          "options": [
+            "A. 从事需要体力或动手能力的工作",
+            "B. 组织一次面向他人的活动"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 42,
+            "a_dim": "R",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h43",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 43/76）",
+          "options": [
+            "A. 处理具体可见的成果",
+            "B. 关心朋友的情绪并陪伴"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 43,
+            "a_dim": "R",
+            "b_dim": "S"
+          }
+        },
+        {
+          "id": "h44",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 44/76）",
+          "options": [
+            "A. 解一道复杂的数学题",
+            "B. 创作绘画、音乐或文学作品"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 44,
+            "a_dim": "I",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h45",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 45/76）",
+          "options": [
+            "A. 查阅资料分析现象的成因",
+            "B. 设计独特的视觉作品"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 45,
+            "a_dim": "I",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h46",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 46/76）",
+          "options": [
+            "A. 设计实验验证一个想法",
+            "B. 编排一段舞台表演"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 46,
+            "a_dim": "I",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h47",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 47/76）",
+          "options": [
+            "A. 阅读学术论文获取新知",
+            "B. 为产品做创意设计"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 47,
+            "a_dim": "I",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h48",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 48/76）",
+          "options": [
+            "A. 在数据中寻找规律",
+            "B. 用文字表达自己的情感"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 48,
+            "a_dim": "I",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h49",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 49/76）",
+          "options": [
+            "A. 推理一道逻辑题",
+            "B. 探索新颖的艺术风格"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 49,
+            "a_dim": "I",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h50",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 50/76）",
+          "options": [
+            "A. 召集团队并分工合作",
+            "B. 参与工程实施而非纸面方案"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 50,
+            "a_dim": "E",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h51",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 51/76）",
+          "options": [
+            "A. 在辩论或谈判中说服他人",
+            "B. 钻研机械原理并实际试验"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 51,
+            "a_dim": "E",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h52",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 52/76）",
+          "options": [
+            "A. 组织一次有目标的活动",
+            "B. 搭建实物模型而非只画图"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 52,
+            "a_dim": "E",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h53",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 53/76）",
+          "options": [
+            "A. 推广一个项目或产品",
+            "B. 在生产/制造现场工作"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 53,
+            "a_dim": "E",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h54",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 54/76）",
+          "options": [
+            "A. 领导团队完成挑战",
+            "B. 修理日常物品让它继续可用"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 54,
+            "a_dim": "E",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h55",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 55/76）",
+          "options": [
+            "A. 在商业谈判中争取共识",
+            "B. 动手维修机械或电子设备"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 55,
+            "a_dim": "E",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h56",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 56/76）",
+          "options": [
+            "A. 整理数据并制作清晰报表",
+            "B. 深入研究某个理论问题"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 56,
+            "a_dim": "C",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h57",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 57/76）",
+          "options": [
+            "A. 按流程精确完成事务性工作",
+            "B. 钻研未解决的科学难题"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 57,
+            "a_dim": "C",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h58",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 58/76）",
+          "options": [
+            "A. 维护账目让收支清楚",
+            "B. 用模型解释复杂现象"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 58,
+            "a_dim": "C",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h59",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 59/76）",
+          "options": [
+            "A. 把杂乱信息分类归档",
+            "B. 为问题构建分析框架"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 59,
+            "a_dim": "C",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h60",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 60/76）",
+          "options": [
+            "A. 按既定规则核对资料",
+            "B. 把现象抽象成原理"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 60,
+            "a_dim": "C",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h61",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 61/76）",
+          "options": [
+            "A. 为活动制定流程清单",
+            "B. 探究自然规律并提出假说"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 61,
+            "a_dim": "C",
+            "b_dim": "I"
+          }
+        },
+        {
+          "id": "h62",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 62/76）",
+          "options": [
+            "A. 即兴演奏或表演",
+            "B. 为团队设定明确目标"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 62,
+            "a_dim": "A",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h63",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 63/76）",
+          "options": [
+            "A. 为活动设计创意主题",
+            "B. 面向公众发表演讲"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 63,
+            "a_dim": "A",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h64",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 64/76）",
+          "options": [
+            "A. 通过作品传达想法",
+            "B. 在比赛中担任队长"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 64,
+            "a_dim": "A",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h65",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 65/76）",
+          "options": [
+            "A. 尝试不同媒介进行创作",
+            "B. 为创业项目寻找资源"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 65,
+            "a_dim": "A",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h66",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 66/76）",
+          "options": [
+            "A. 改编经典作品赋予新意",
+            "B. 处理团队内部的冲突"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 66,
+            "a_dim": "A",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h67",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 67/76）",
+          "options": [
+            "A. 设计图书或海报的视觉风格",
+            "B. 在不确定环境中拍板决策"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 67,
+            "a_dim": "A",
+            "b_dim": "E"
+          }
+        },
+        {
+          "id": "h68",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 68/76）",
+          "options": [
+            "A. 为他人讲解知识",
+            "B. 在户外实地操作"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 68,
+            "a_dim": "S",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h69",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 69/76）",
+          "options": [
+            "A. 在团体中协调成员关系",
+            "B. 使用工具完成具体任务"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 69,
+            "a_dim": "S",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h70",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 70/76）",
+          "options": [
+            "A. 为新成员提供入门指引",
+            "B. 把零件组装成完整产品"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 70,
+            "a_dim": "S",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h71",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 71/76）",
+          "options": [
+            "A. 陪伴老人或患者",
+            "B. 操控仪器或设备完成任务"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 71,
+            "a_dim": "S",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h72",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 72/76）",
+          "options": [
+            "A. 在心理咨询场景中提供支持",
+            "B. 从事需要体力或动手能力的工作"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 72,
+            "a_dim": "S",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h73",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 73/76）",
+          "options": [
+            "A. 通过教育影响他人成长",
+            "B. 处理具体可见的成果"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 73,
+            "a_dim": "S",
+            "b_dim": "R"
+          }
+        },
+        {
+          "id": "h74",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 74/76）",
+          "options": [
+            "A. 检查文件中的细节错误",
+            "B. 创作绘画、音乐或文学作品"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 74,
+            "a_dim": "C",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h75",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 75/76）",
+          "options": [
+            "A. 建立条理化的记录系统",
+            "B. 设计独特的视觉作品"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 75,
+            "a_dim": "C",
+            "b_dim": "A"
+          }
+        },
+        {
+          "id": "h76",
+          "type": "radio",
+          "required": true,
+          "label": "下列两项活动更喜欢哪一项？（题 76/76）",
+          "options": [
+            "A. 执行重复但精确的核对工作",
+            "B. 编排一段舞台表演"
+          ],
+          "_meta": {
+            "scale": "holland",
+            "item_no": 76,
+            "a_dim": "C",
+            "b_dim": "A"
+          }
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "total_questions": 252,
+    "required_questions": 252,
+    "optional_questions": 0,
+    "category": "历史类",
+    "estimated_time": "30-40分钟",
+    "last_updated": "2026-05-19",
+    "version_notes": "v3.1修复：q11拆分为听力+嗅觉两题；新增身高/体重/纹身/外语语种/政治面貌/应届复读；专项计划拆分为资格确认；新增服从专业调剂/强基计划/征集志愿/开放题；修复选项边界重叠(q18/23/28)；优势学科补全地理/政治(已在q35-38中)；历史/外语选项4点→5点；q49/q50增加中立选项；费用区间改为年度；优化伦理/压力/技术迭代等题目表述；新增是否学农 | 集成项目自编大五维度 + RIASEC 风格问卷（AUDIT-P0-011）；未经心理测量验证"
+  }
+}
