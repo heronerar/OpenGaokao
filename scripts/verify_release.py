@@ -375,7 +375,7 @@ def check_runtime_e2e(province: str, expected_data_source: str) -> CheckResult:
         tail = '\n'.join(out.strip().splitlines()[-24:])
         return CheckResult('真实运行入口', False, f'exit={proc.returncode}\n{tail}')
     required_keys = {
-        'health', 'page', 'data_source', 'schools', 'summary_total',
+        'health', 'page', 'data_source', 'data_provenance', 'schools', 'summary_total',
         'pipeline_steps', 'analysis_sections', 'restart_semantics',
     }
     receipt = {}
@@ -391,6 +391,12 @@ def check_runtime_e2e(province: str, expected_data_source: str) -> CheckResult:
         return CheckResult('真实运行入口', False,
                            f'回执不符: health={receipt["health"]}, '
                            f'data_source={receipt["data_source"]}')
+    if expected_data_source == 'example':
+        if receipt['data_provenance'] != 'synthetic_example':
+            return CheckResult('真实运行入口', False,
+                               f'示例来源标记不符: {receipt["data_provenance"]}')
+    elif receipt['data_provenance'] == 'synthetic_example':
+        return CheckResult('真实运行入口', False, '真实省份验收拒绝合成示例数据')
     try:
         for key in ('schools', 'summary_total', 'pipeline_steps', 'analysis_sections'):
             if int(receipt[key]) <= 0:
@@ -399,6 +405,7 @@ def check_runtime_e2e(province: str, expected_data_source: str) -> CheckResult:
         return CheckResult('真实运行入口', False, f'回执计数无效: {exc}')
     details = [
         f'data_source: {receipt["data_source"]}',
+        f'data_provenance: {receipt["data_provenance"]}',
         f'schools: {receipt["schools"]}',
         f'restart_semantics: {receipt["restart_semantics"]}',
     ]

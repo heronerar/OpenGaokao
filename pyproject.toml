@@ -1,7 +1,7 @@
 [project]
 name = "open-gaokao"
 version = "1.0.0"
-description = "开源透明的高考志愿推荐引擎 — 面向3+1+2新高考（21省），当前已适配云南"
+description = "开源透明的高考志愿推荐引擎 — 面向3+1+2模式设计，当前仅验收云南"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [

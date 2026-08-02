@@ -29,6 +29,20 @@ class HealthScreening:
     tattoo: str = ''            # 纹身
 
 
+def _normalize_color_vision(value) -> str:
+    """统一公开问卷与 Web 的色觉选项，避免“无色盲”被子串误判为色盲。"""
+    text = str(value or '').strip()
+    if text in ('正常', '无', '无色盲色弱') or text.startswith('无色盲'):
+        return '正常'
+    if '色盲' in text:
+        return '色盲'
+    if '色弱' in text:
+        return '色弱'
+    if '障碍' in text or '识别' in text:
+        return '颜色识别障碍'
+    return text
+
+
 @dataclass
 class UserQuestionnaire:
     """用户问卷数据 V3.1"""
@@ -407,7 +421,7 @@ class QuestionnaireParser:
 
         # 体检结论
         health = HealthScreening(
-            color_vision=get_phys('q9_color_vision', ''),
+            color_vision=_normalize_color_vision(get_phys('q9_color_vision', '')),
             vision=get_phys('q10_vision', ''),
             hearing=get_phys('q11_hearing', ''),
             smell=get_phys('q11b_smell', ''),

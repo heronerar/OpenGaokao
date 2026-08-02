@@ -66,6 +66,8 @@ Web 与 API 才可访问；关闭终端、按 `Ctrl+C`、退出进程或重启�
 
 若 `data/yunnan_gaokao.db` 不存在，服务会降级到 `data/example.db`，页面将持续显示
 红色“演示数据”警示；这类结果不可用于实际填报，也不能作为真实数据验收通过。
+示例库同时写入内容级 `synthetic_example` 标记；即使复制或改名为
+`yunnan_gaokao.db`，API、Web 与发版门禁仍会把它识别为演示数据。
 
 ## 运行验收与完成口径
 

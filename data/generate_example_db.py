@@ -237,6 +237,19 @@ def create_example_db():
         mapped_major_classes TEXT, confidence REAL, wef_role_type TEXT
     )''')
 
+    # 内容级来源标记：复制或改名数据库后仍必须被识别为合成示例数据。
+    c.execute('''CREATE TABLE opengaokao_dataset_metadata (
+        key TEXT PRIMARY KEY, value TEXT NOT NULL
+    )''')
+    c.executemany(
+        'INSERT INTO opengaokao_dataset_metadata VALUES (?, ?)',
+        [
+            ('data_kind', 'synthetic_example'),
+            ('dataset_id', 'opengaokao.synthetic-example.v1'),
+            ('generator', 'data/generate_example_db.py'),
+        ],
+    )
+
     # 即使单独查看 SQL 结果，也必须能识别为示例数据，避免虚构记录冒充真实院校数据。
     for table in (
         'school_info', 'score_line_2025', 'score_line_2024',
@@ -247,7 +260,7 @@ def create_example_db():
     conn.commit()
     conn.close()
     print(f'[OK] 示例数据库已生成: {DB_PATH}')
-    total_tables = 10
+    total_tables = 11
     total_rows = (
         len(scores_data) + len(schools) + len(majors)
         + len(score_lines) + len(score_lines_24)

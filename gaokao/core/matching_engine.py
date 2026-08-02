@@ -1943,6 +1943,8 @@ class MatchingEngine:
                 answers['color_vision'] = '色弱'
             elif '障碍' in cv or '识别' in cv:
                 answers['color_vision'] = '颜色识别障碍'
+            elif cv in ('正常', '无'):
+                answers['color_vision'] = '正常'
             elif cv and cv not in ('正常', '无'):
                 answers['color_vision'] = cv
 

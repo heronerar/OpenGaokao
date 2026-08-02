@@ -1,6 +1,6 @@
 /**
  * result_view.js — 推荐结果三 tab 视图
- * 优先使用 API 返回数据，API 不可用时回退 mock
+ * 只渲染 API 返回数据；API 不可用时明确失败，不生成 mock 推荐
  */
 window.ResultView = (function() {
   'use strict';
@@ -16,7 +16,7 @@ window.ResultView = (function() {
     }
     lastResult = apiResult;
     // OG-F-29: 若后端回退到示例库，持久横幅提示（非一闪即逝的 toast）
-    renderDataSourceBanner(apiResult.data_source);
+    renderDataSourceBanner(apiResult.data_source, apiResult.data_provenance);
     renderRecommendations(apiResult);
     renderPipeline(apiResult);
     renderRisk(apiResult);
@@ -36,7 +36,7 @@ window.ResultView = (function() {
   }
 
   // OG-F-29: 数据来源横幅（示例库时持久红色提示）
-  function renderDataSourceBanner(dataSource) {
+  function renderDataSourceBanner(dataSource, dataProvenance) {
     const host = document.getElementById('app-result');
     if (!host) return;
     let banner = document.getElementById('data-source-banner');
@@ -48,7 +48,10 @@ window.ResultView = (function() {
           + 'font-size:14px;text-align:center;font-weight:600';
         host.insertBefore(banner, host.firstChild);
       }
-      banner.textContent = '⚠️ 演示数据：当前结果基于内置示例库（example.db），非真实录取数据，不可用于实际填报。';
+      const reason = dataProvenance === 'synthetic_example'
+        ? '数据库内容标记为合成示例数据'
+        : '当前使用演示数据';
+      banner.textContent = `⚠️ 演示数据：${reason}（文件改名也不会变成真实数据），不可用于实际填报。`;
     } else if (banner) {
       banner.remove();
     }

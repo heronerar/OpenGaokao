@@ -1,5 +1,6 @@
 """发版门禁自身的失效保护测试。"""
 import os
+import shutil
 import socket
 import subprocess
 import sys
@@ -13,7 +14,7 @@ from scripts.verify_release import (
     check_public_tree,
     check_runtime_e2e,
 )
-from tests.test_e2e_api import _assert_server_stopped, _free_port
+from tests.test_e2e_api import _assert_server_stopped, _build_payload, _free_port
 
 
 def _pid_exists(pid: int) -> bool:
@@ -119,6 +120,41 @@ def test_runtime_gate_rejects_empty_success_receipt(monkeypatch):
     result = check_runtime_e2e('yunnan', 'yunnan')
     assert not result.passed
     assert '缺少回执字段' in result.detail
+
+
+def test_renamed_example_db_remains_synthetic(tmp_path, monkeypatch):
+    """示例库复制成省份文件名后，API 仍必须把内容标为 example。"""
+    from data import generate_example_db
+    from gaokao.api import server
+
+    data_dir = tmp_path / 'data'
+    data_dir.mkdir()
+    example_db = data_dir / 'example.db'
+    renamed_db = data_dir / 'yunnan_gaokao.db'
+    monkeypatch.setattr(generate_example_db, 'DB_PATH', str(example_db))
+    generate_example_db.create_example_db()
+    shutil.copy2(example_db, renamed_db)
+    monkeypatch.setattr(server, 'PROJECT_ROOT', str(tmp_path))
+
+    resolved, data_source, provenance = server.resolve_database('yunnan')
+
+    assert resolved == str(renamed_db)
+    assert data_source == 'example'
+    assert provenance == 'synthetic_example'
+
+    server._engine_cache.clear()
+    try:
+        response = server.app.test_client().post(
+            '/api/recommend', json=_build_payload('yunnan')
+        )
+        payload = response.get_json()
+        assert response.status_code == 200, payload
+        assert payload['data_source'] == 'example'
+        assert payload['data_provenance'] == 'synthetic_example'
+    finally:
+        for engine in server._engine_cache.values():
+            engine.close()
+        server._engine_cache.clear()
 
 
 def test_public_tree_rejects_forbidden_paths_and_large_file(tmp_path, monkeypatch):

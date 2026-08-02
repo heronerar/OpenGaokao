@@ -58,3 +58,21 @@ def test_public_questionnaire_does_not_require_exam_id():
     })
 
     assert questionnaire.exam_id == ''
+
+
+def test_no_color_blindness_label_is_not_misclassified():
+    """“无色盲色弱”含敏感子串，但必须归一为正常。"""
+    from gaokao.core.questionnaire_parser import QuestionnaireParser
+
+    questionnaire = QuestionnaireParser.create_by_category('物理类').parse({
+        'q1_name': '本地昵称',
+        'q9_color_vision': '无色盲色弱',
+        'q12_total_score': 580,
+        'q13_rank': 15000,
+        'q14_category': '物理类',
+    })
+
+    assert questionnaire.health_screening.color_vision == '正常'
+    from gaokao.core.matching_engine import MatchingEngine
+    answers = MatchingEngine.__new__(MatchingEngine)._build_constraint_answers(questionnaire)
+    assert answers['color_vision'] == '正常'

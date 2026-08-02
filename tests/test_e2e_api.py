@@ -206,6 +206,15 @@ def run_runtime_acceptance(province: str, expected_data_source: str) -> dict:
                 raise RuntimeError(
                     f'数据源不符：期望 {expected_data_source}，实际 {actual_source or "未标识"}'
                 )
+            actual_provenance = result.get('data_provenance')
+            if not actual_provenance:
+                raise RuntimeError('推荐响应缺少 data_provenance 内容来源标记')
+            if actual_source == 'example' and actual_provenance != 'synthetic_example':
+                raise RuntimeError(
+                    f'示例数据来源标记不符: {actual_provenance}'
+                )
+            if expected_data_source != 'example' and actual_provenance == 'synthetic_example':
+                raise RuntimeError('真实省份验收拒绝 synthetic_example 数据')
 
             schools = result.get('schools') or []
             summary = result.get('summary') or {}
@@ -225,6 +234,7 @@ def run_runtime_acceptance(province: str, expected_data_source: str) -> dict:
                 'health': health.get('status'),
                 'page': 'OpenGaokao + js/app.js',
                 'data_source': actual_source,
+                'data_provenance': actual_provenance,
                 'schools': len(schools),
                 'summary_total': summary_total,
                 'first_school': schools[0].get('name'),

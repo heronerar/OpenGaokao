@@ -65,6 +65,11 @@ def cmd_run_example(province: str):
         print(f'❌ 示例数据库不存在: {db_path}')
         print(f'   请先运行: python data/generate_example_db.py')
         return 1
+    from gaokao.data_provenance import SYNTHETIC_DATA_KIND, inspect_database_provenance
+    provenance = inspect_database_provenance(db_path)
+    if provenance != SYNTHETIC_DATA_KIND:
+        print('❌ example.db 缺少合成数据内容标记，拒绝作为示例运行。')
+        return 1
 
     print(f'🚀 OpenGaokao 示例运行 — {cfg.name}')
     print('⚠️  当前为虚构示例数据，仅用于功能演示，不可用于实际填报。')
@@ -171,6 +176,12 @@ def cmd_check_data(province: str, db_path: str):
 
     if not os.path.exists(db_path):
         print(f'❌ 数据库不存在: {db_path}')
+        return 1
+
+    from gaokao.data_provenance import SYNTHETIC_DATA_KIND, inspect_database_provenance
+    provenance = inspect_database_provenance(db_path)
+    if provenance == SYNTHETIC_DATA_KIND and os.path.basename(db_path) != 'example.db':
+        print('❌ 数据库内容被识别为合成示例数据，不得作为真实省份数据库验收。')
         return 1
 
     import sqlite3
@@ -297,6 +308,7 @@ def cmd_check_data(province: str, db_path: str):
     # ── 输出 ──
     print(f'📊 数据校验报告 — {cfg.name} ({cfg.slug})')
     print(f'   数据库: {db_path}')
+    print(f'   内容来源: {provenance}')
     print(f'   投档线表: {score_line_table} / 招生计划表: {enroll_plan_table}')
     print()
 

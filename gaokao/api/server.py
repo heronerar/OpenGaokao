@@ -31,6 +31,11 @@ from flask_cors import CORS
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, PROJECT_ROOT)
 
+from gaokao.data_provenance import (  # noqa: E402
+    SYNTHETIC_DATA_KIND,
+    inspect_database_provenance,
+)
+
 WEB_DIR = os.path.join(PROJECT_ROOT, 'web')
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
@@ -61,6 +66,24 @@ def get_province_config(slug: str):
     if not cfg:
         raise ValueError(f'未知省份: {slug}')
     return cfg
+
+
+def resolve_database(province: str):
+    """按数据库内容而非文件名决定是否为合成示例数据。"""
+    province_db = os.path.join(PROJECT_ROOT, 'data', f'{province}_gaokao.db')
+    fallback = os.path.join(PROJECT_ROOT, 'data', 'example.db')
+    used_fallback = not os.path.exists(province_db)
+    db_path = fallback if used_fallback else province_db
+    if not os.path.exists(db_path):
+        raise FileNotFoundError(f'数据库文件不存在: {province_db}')
+
+    provenance = inspect_database_provenance(db_path)
+    if used_fallback and provenance != SYNTHETIC_DATA_KIND:
+        raise RuntimeError('example.db 缺少合成数据来源标记，拒绝静默降级')
+    data_source = 'example' if provenance == SYNTHETIC_DATA_KIND else province
+    if data_source == 'example':
+        log.warning(f'数据库内容被识别为合成示例数据: {db_path}')
+    return db_path, data_source, provenance
 
 
 # ─────────────────────────────────────────────
@@ -211,17 +234,7 @@ def recommend():
 
         # 1) 解析省份配置
         cfg = get_province_config(province)
-        db_path = os.path.join(PROJECT_ROOT, 'data', f'{province}_gaokao.db')
-        data_source = province  # OG-F-29: 标明结果来源，前端据此判断是否示例库
-        if not os.path.exists(db_path):
-            # 开发期回退到 example.db
-            fallback = os.path.join(PROJECT_ROOT, 'data', 'example.db')
-            if os.path.exists(fallback):
-                log.warning(f'省份数据库 {db_path} 不存在，回退使用 example.db')
-                db_path = fallback
-                data_source = 'example'
-            else:
-                return jsonify({'error': f'数据库文件不存在: {db_path}'}), 404
+        db_path, data_source, data_provenance = resolve_database(province)
 
         # 2) 解析问卷
         from gaokao.core.questionnaire_parser import QuestionnaireParser
@@ -254,7 +267,8 @@ def recommend():
 
         # 6) 序列化响应
         response_data = _serialize_result(result, cfg)
-        response_data['data_source'] = data_source  # OG-F-29: example=示例库，前端持久横幅告警
+        response_data['data_source'] = data_source
+        response_data['data_provenance'] = data_provenance
 
         # 7) 生成深度分析报告（纯算法，无 LLM）
         try:
@@ -299,13 +313,7 @@ def export_report():
 
         # 1) 省份配置 + db
         cfg = get_province_config(province)
-        db_path = os.path.join(PROJECT_ROOT, 'data', f'{province}_gaokao.db')
-        if not os.path.exists(db_path):
-            fallback = os.path.join(PROJECT_ROOT, 'data', 'example.db')
-            if os.path.exists(fallback):
-                db_path = fallback
-            else:
-                return jsonify({'error': f'数据库文件不存在: {db_path}'}), 404
+        db_path, data_source, data_provenance = resolve_database(province)
 
         # 2) 解析问卷 + 执行匹配
         from gaokao.core.questionnaire_parser import QuestionnaireParser
@@ -359,6 +367,8 @@ def export_report():
             'format': fmt,
             'files': export_paths,
             'output_dir': gen.output_dir,
+            'data_source': data_source,
+            'data_provenance': data_provenance,
         })
 
     except Exception as e:
@@ -799,11 +809,9 @@ def main():
 
     # 预热默认省份引擎
     try:
-        db_path = os.path.join(PROJECT_ROOT, 'data', f'{args.province}_gaokao.db')
-        if not os.path.exists(db_path):
-            db_path = os.path.join(PROJECT_ROOT, 'data', 'example.db')
-        if os.path.exists(db_path):
-            get_engine(db_path)
+        db_path, data_source, data_provenance = resolve_database(args.province)
+        get_engine(db_path)
+        log.info(f'   数据源: {data_source} ({data_provenance})')
     except Exception as e:
         log.warning(f'预热失败（不影响启动）: {e}')
 
