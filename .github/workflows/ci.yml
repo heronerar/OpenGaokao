@@ -48,3 +48,15 @@ jobs:
       - name: 发版门禁（CI 模式）
         # 语法 + pytest + 真实 Flask/Web/API 进程（显式 example 源）+ 隐私 + AGPL
         run: python scripts/verify_release.py --ci
+
+      - name: 许可迁移期间公开发布必须失败关闭
+        shell: bash
+        run: |
+          set +e
+          output="$(python scripts/verify_release.py --ci --public-release 2>&1)"
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+          test "$status" -eq 1
+          grep -F 'LEGAL_REVIEW_REQUIRED' <<<"$output"
+          grep -F '仓库必须保持 PRIVATE' <<<"$output"

@@ -1,20 +1,28 @@
 """发版门禁自身的失效保护测试。"""
+import json
 import os
 import shutil
 import socket
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 import pytest
 
+import scripts.verify_release as verify_release
 from scripts.verify_release import (
     _run_with_process_tree_timeout,
+    check_publication_authorization,
     check_public_release,
     check_public_tree,
+    check_pytest_full,
     check_runtime_e2e,
 )
 from tests.test_e2e_api import _assert_server_stopped, _build_payload, _free_port
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 def _pid_exists(pid: int) -> bool:
@@ -301,3 +309,95 @@ def test_public_release_accepts_clean_history_without_denylist_hits(tmp_path, mo
 
     assert result.passed, result.detail
     assert '可达提交' in result.detail
+
+
+def test_publication_authorization_fails_closed_during_legal_review():
+    """权属/律师审定未完成时，机械门禁必须阻止恢复公开。"""
+    result = check_publication_authorization()
+
+    assert not result.passed
+    assert 'LEGAL_REVIEW_REQUIRED' in result.detail
+    assert '保持 PRIVATE' in result.detail
+
+
+def test_publication_authorization_rejects_in_repository_self_approval(tmp_path, monkeypatch):
+    """把仓库内状态自填为 APPROVED 不能冒充权属和律师批准。"""
+    policy = json.loads((PROJECT_ROOT / 'licensing/publication-policy.json').read_text(encoding='utf-8'))
+    policy['status'] = 'APPROVED'
+    candidate = tmp_path / 'publication-policy.json'
+    candidate.write_text(json.dumps(policy), encoding='utf-8')
+    monkeypatch.setattr(verify_release, 'PUBLICATION_POLICY', candidate)
+
+    result = check_publication_authorization()
+
+    assert not result.passed
+    assert '不能自我批准' in result.detail
+
+
+def test_pytest_gate_ignores_inherited_addopts(monkeypatch):
+    """外部 PYTEST_ADDOPTS 不能把全量测试改成 collect-only/help。"""
+    captured = {}
+
+    def fake_run(*args, **kwargs):
+        captured.update(kwargs)
+        return subprocess.CompletedProcess(args[0], 0, stdout='18 passed in 1.00s\n', stderr='')
+
+    monkeypatch.setenv('PYTEST_ADDOPTS', '--collect-only')
+    monkeypatch.setattr(subprocess, 'run', fake_run)
+
+    result = check_pytest_full(False)
+
+    assert result.passed
+    assert 'PYTEST_ADDOPTS' not in captured['env']
+
+
+def test_pytest_gate_rejects_exit_zero_without_passed_tests(monkeypatch):
+    """pytest 空跑即使 exit=0 也不得被宣告为全套通过。"""
+    monkeypatch.setattr(
+        subprocess,
+        'run',
+        lambda *args, **kwargs: subprocess.CompletedProcess(
+            args[0], 0, stdout='collected 18 items\n', stderr=''
+        ),
+    )
+
+    result = check_pytest_full(False)
+
+    assert not result.passed
+    assert '没有实际通过测试' in result.detail
+
+
+def test_public_release_cannot_skip_full_pytest():
+    """正式公开发布不得用轻量模式绕过全量 pytest。"""
+    result = subprocess.run(
+        [
+            sys.executable,
+            'scripts/verify_release.py',
+            '--ci',
+            '--public-release',
+            '--skip-fulltest',
+        ],
+        cwd=str(PROJECT_ROOT),
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert result.returncode != 0
+    assert '--public-release 不允许与 --skip-fulltest 组合' in result.stderr
+
+
+def test_public_release_fails_before_tests_when_license_review_is_pending():
+    """许可未获批时即使调用正式命令，也应快速非零退出。"""
+    result = subprocess.run(
+        [sys.executable, 'scripts/verify_release.py', '--ci', '--public-release'],
+        cwd=str(PROJECT_ROOT),
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert result.returncode == 1
+    output = result.stdout + result.stderr
+    assert 'LEGAL_REVIEW_REQUIRED' in output
+    assert '仓库必须保持 PRIVATE' in output

@@ -1,19 +1,24 @@
-# OpenGaokao — 开源高考志愿推荐引擎
+# OpenGaokao — 高考志愿推荐引擎（许可迁移中）
+
+> 🔒 **许可迁移中：当前仓库必须保持 PRIVATE。** 项目所有者已确定未来目标为
+> “源码可见、商业受限”，但定制许可证、YGCare 权属链和律师审定尚未完成。
+> 在 [LICENSING.md](LICENSING.md) 列出的硬门禁全部通过前，不得恢复公开，也不得宣称
+> 新商业限制已经生效。历史 AGPL 版本的既有权利不受未来变更影响。
 
 [![AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-green)]()
 [![CI](https://github.com/heronerar/OpenGaokao/actions/workflows/ci.yml/badge.svg)](https://github.com/heronerar/OpenGaokao/actions/workflows/ci.yml)
 
-**开源透明 · 每一步可解释 · 本地隐私保护**
+**源码透明 · 每一步可解释 · 本地隐私保护**
 
-OpenGaokao 是一个开源的高考志愿推荐引擎，面向 3+1+2 新高考模式设计。仓库当前包含**云南**配置；真实云南数据库不随代码分发。同为院校专业组模式的省份可按 YAML + 数据处理代码贡献（见 docs/data-guide.md），其他志愿模式仍可能需要代码适配。
+OpenGaokao 是一个高考志愿推荐引擎，面向 3+1+2 新高考模式设计。仓库当前包含**云南**配置；真实云南数据库不随代码分发。同为院校专业组模式的省份可按 YAML + 数据处理代码适配（见 docs/data-guide.md），其他志愿模式仍可能需要代码适配。
 基于历史录取数据、项目自编偏好问卷和规则引擎，生成透明、可追溯、可审计的志愿推荐方案。
 
-本项目于 2026-06-08 从 **YGCare** 移植核心推荐代码后独立演进；商业运营与第三方集成模块不在本仓库。衍生与修改声明见 [NOTICE](NOTICE)。公开发布以相关权利持有人确认这些代码可按 `AGPL-3.0-or-later` 发布为前提。
+本项目于 2026-06-08 从 **YGCare** 移植核心推荐代码后独立演进；商业运营与第三方集成模块不在本仓库。衍生与修改声明见 [NOTICE](NOTICE)。当前迁移候选仍保留历史 `AGPL-3.0-or-later` 许可；未来以商业受限条款重新公开，必须先取得相关权利人的重许可确认和律师审定。
 
 > ⚠️ **使用边界：** 当前为 Beta 阶段的本地决策辅助工具，不是教育考试机构官方系统，也不构成录取承诺。真实填报前必须核对当年考试院政策、招生计划和数据时效。
 
-## 为什么开源？
+## 为什么公开源码？
 
 高考志愿是**一次性、高赌注、不可逆**的决策。家长需要的不只是推荐结果，更需要知道**为什么推荐**。
 
@@ -31,7 +36,7 @@ OpenGaokao 的核心理念：**"别信我，你来看代码。"**
 
 | 能力 | 当前状态 |
 |------|---------|
-| 推荐逻辑 | 开源规则与固定算法，可在本地复现 |
+| 推荐逻辑 | 源码可审查的规则与固定算法，可在本地复现 |
 | 数据 | 仓库只生成合成示例库；真实省份数据由使用者合法准备 |
 | Web/API | Flask 本地开发入口，进程退出后即停止 |
 | 偏好问卷 | 项目自编、未经心理测量验证，仅作方向参考 |
@@ -88,11 +93,17 @@ python scripts/verify_release.py --province yunnan
 正式公开发布还要执行维护者门禁；该门禁要求提供不进入 Git 的私有 PII denylist，并扫描待发布树与全部 Git refs：
 
 ```bash
-python scripts/verify_release.py --ci --public-release --pii-denylist <私有文件路径>
+python scripts/verify_release.py --ci --public-release \
+  --pii-denylist <私有文件路径>
 ```
 
 这里的 `--ci` 表示验收不含私有省份数据库的“代码公开包”；真实云南数据仍须另行执行
 不带 `--ci` 的本地发版门禁，二者不能相互替代。
+
+当前 `licensing/publication-policy.json` 的状态为 `LEGAL_REVIEW_REQUIRED`，所以上述
+正式公开命令必须非零退出。该状态不能在仓库内自我改成 `APPROVED`：未来必须先实现受
+保护的仓库外签名审批验证，再由独立变更开放发布路径。完成条件见
+[LICENSING.md](LICENSING.md)。
 
 ## 目录结构
 
@@ -120,11 +131,13 @@ OpenGaokao/
 
 ## 许可证
 
-- 仓库中的代码、文档与生成脚本：[`AGPL-3.0-or-later`](LICENSE)
+- 当前私有迁移候选中的代码、文档与生成脚本仍为历史
+  [`AGPL-3.0-or-later`](LICENSE)；这不表示未来商业受限许可证已经生效
 - `data/example.db` 不进入 Git，由 `data/generate_example_db.py` 现场生成
 
 真实省份数据库、商业数据包和任何考生记录均不随本代码仓库分发。贡献数据前请阅读 [贡献指南](CONTRIBUTING.md) 的来源、授权与隐私要求。
 
 ## 参与贡献
 
-欢迎提交代码、省份配置和可合法再分发的数据处理工具。开始前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)，并确保发布门禁失败时不宣告完成。
+许可迁移期间暂停合并外部代码贡献；当前只接受 issue、复现材料和不包含第三方代码的
+讨论。详情见 [CONTRIBUTING.md](CONTRIBUTING.md)，并确保发布门禁失败时不宣告完成。

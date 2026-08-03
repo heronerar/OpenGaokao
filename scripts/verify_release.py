@@ -18,6 +18,7 @@
     ▶ v_enroll_detail 物化表新鲜度（逐年 1:1 对齐 enroll_detail + 含 norm_subject）
     ▶ 本地隐私门禁（gaokao/ 内不得出现对外发网络请求 —— 兑现 README"本地运行"承诺）
     ▶ AGPL 许可证声明（LICENSE 为 AGPL + README 声明源码可获取）
+    ▶ 许可迁移授权（迁移未完成期间机械阻止恢复公开）
 
 用法：
     python scripts/verify_release.py                       # 默认 yunnan，全套
@@ -28,6 +29,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import signal
@@ -37,6 +39,8 @@ import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PUBLICATION_POLICY = PROJECT_ROOT / 'licensing' / 'publication-policy.json'
+_HISTORICAL_PUBLIC_COMMIT = 'bf1805e6979b6c5022944ce58829e9f27fcabc0c'
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import create_views  # 复用 DEDUP_BELOW_YEAR，保证新鲜度判定与建视图口径一致
@@ -288,15 +292,24 @@ def check_pytest_full(skip: bool) -> CheckResult:
     print('\n▶ pytest 全套...')
     if skip:
         return CheckResult('pytest 全套', True, '（--skip-fulltest 跳过）')
+    clean_env = os.environ.copy()
+    clean_env.pop('PYTEST_ADDOPTS', None)
     proc = subprocess.run(
         [sys.executable, '-m', 'pytest', 'tests/', '-q', '--tb=short'],
-        cwd=str(PROJECT_ROOT), capture_output=True, text=True,
+        cwd=str(PROJECT_ROOT), capture_output=True, text=True, env=clean_env,
     )
     out = proc.stdout + proc.stderr
     if proc.returncode != 0:
         tail = '\n'.join(out.strip().splitlines()[-6:])
         return CheckResult('pytest 全套', False, f'exit={proc.returncode}\n{tail}')
-    summary = next((l for l in out.splitlines() if 'passed' in l), '').strip()
+    summary = next((l for l in out.splitlines() if re.search(r'\b\d+ passed\b', l)), '').strip()
+    if not summary:
+        tail = '\n'.join(out.strip().splitlines()[-6:])
+        return CheckResult(
+            'pytest 全套', False,
+            'pytest exit=0，但没有实际通过测试的摘要；拒绝把 collect-only/help 当成通过'
+            + (f'\n{tail}' if tail else ''),
+        )
     return CheckResult('pytest 全套', True, summary)
 
 
@@ -594,6 +607,61 @@ def check_agpl_license() -> CheckResult:
     return CheckResult('AGPL 合规', True, 'LICENSE=AGPL + README + NOTICE + 源文件 SPDX 头齐备')
 
 
+def check_publication_authorization() -> CheckResult:
+    """▶ 许可迁移硬门禁：当前不存在可由仓库自身放行的公开路径。"""
+    print('\n▶ 许可迁移授权（权属 + 定制许可证 + 律师审定）...')
+    if not PUBLICATION_POLICY.exists():
+        return CheckResult('许可迁移授权', False, '缺少 licensing/publication-policy.json')
+    try:
+        policy = json.loads(PUBLICATION_POLICY.read_text(encoding='utf-8'))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return CheckResult('许可迁移授权', False, 'publication-policy.json 无法解析')
+
+    if policy.get('schema_version') != 1:
+        return CheckResult('许可迁移授权', False, '不支持的 publication policy schema')
+    if policy.get('target_model') != 'source-available-commercial-restricted':
+        return CheckResult('许可迁移授权', False, '目标许可模型不符')
+    required_terms = policy.get('required_terms') or {}
+    expected_terms = (
+        'public_source_visibility',
+        'commercial_use_requires_separate_paid_license',
+        'competing_product_or_service_use_prohibited_by_default',
+    )
+    missing_terms = [key for key in expected_terms if required_terms.get(key) is not True]
+    if missing_terms:
+        return CheckResult('许可迁移授权', False,
+                           '商业硬约束缺失：' + '、'.join(missing_terms))
+
+    history = policy.get('historical_agpl') or {}
+    if (
+        history.get('last_public_commit') != _HISTORICAL_PUBLIC_COMMIT
+        or history.get('license') != 'AGPL-3.0-or-later'
+        or history.get('existing_rights_not_retracted') is not True
+    ):
+        return CheckResult('许可迁移授权', False, '历史 AGPL 例外未被完整保留')
+
+    future_gate = policy.get('future_approval_gate') or {}
+    if (
+        future_gate.get('mechanism') != 'protected-external-signed-manifest'
+        or future_gate.get('configured') is not False
+        or future_gate.get('in_repository_self_approval_permitted') is not False
+    ):
+        return CheckResult('许可迁移授权', False, '受保护的仓库外签名审批门禁声明缺失或被篡改')
+
+    status = policy.get('status') or 'MISSING'
+    if status != 'LEGAL_REVIEW_REQUIRED':
+        return CheckResult(
+            '许可迁移授权', False,
+            f'当前状态={status}；仓库内策略不能自我批准。必须先实现受保护的仓库外'
+            '签名审批验证，再由独立提交启用公开路径',
+        )
+    return CheckResult(
+        '许可迁移授权', False,
+        '当前状态=LEGAL_REVIEW_REQUIRED；权属、定制许可证和律师审定未完成，'
+        '仓库必须保持 PRIVATE',
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description='OpenGaokao 发布前验证门禁')
     parser.add_argument('--province', type=str, default='yunnan',
@@ -607,6 +675,16 @@ def main():
     parser.add_argument('--pii-denylist', type=Path,
                         help='私有 UTF-8 PII 字面量名单（每行一项，不得被 Git 跟踪）')
     args = parser.parse_args()
+    if args.public_release and args.skip_fulltest:
+        parser.error('--public-release 不允许与 --skip-fulltest 组合')
+
+    if args.public_release:
+        authorization = check_publication_authorization()
+        if not authorization.passed:
+            print(f'\n❌ {authorization.name}')
+            print(f'     {authorization.detail}')
+            print('\n❌ 许可迁移授权未通过 — 仓库必须保持 PRIVATE', file=sys.stderr)
+            sys.exit(1)
 
     print('=' * 70)
     mode = '公开发布' if args.public_release else ('CI' if args.ci else '本地发版')
@@ -636,6 +714,7 @@ def main():
     results.append(check_local_privacy())
     results.append(check_agpl_license())
     if args.public_release:
+        results.append(authorization)
         results.append(check_public_release(args.pii_denylist))
 
     print('\n' + '=' * 70)

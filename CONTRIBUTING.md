@@ -1,5 +1,9 @@
 # 参与 OpenGaokao
 
+> 许可迁移期间暂停合并外部代码贡献。项目正从历史 AGPL 版本评估迁移到
+> “源码可见、商业受限”模式；在权属链、定制许可证及贡献协议经律师审定前，仅接受
+> issue、复现材料和不包含第三方代码的讨论。详情见 [LICENSING.md](LICENSING.md)。
+
 感谢你改进 OpenGaokao。当前支持的开发方式是在仓库根目录直接运行源码；项目尚未
 提供可独立运行的 wheel / PyPI 安装包。
 
@@ -42,7 +46,8 @@ python scripts/verify_release.py --ci
 维护者在公开发布前还必须运行：
 
 ```bash
-python scripts/verify_release.py --ci --public-release --pii-denylist <不进入 Git 的私有文件>
+python scripts/verify_release.py --ci --public-release \
+  --pii-denylist <不进入 Git 的私有文件>
 ```
 
 私有 denylist 应包含已知真实姓名和其他高风险字面量；门禁会检查待发布文件及所有 Git
@@ -50,3 +55,6 @@ python scripts/verify_release.py --ci --public-release --pii-denylist <不进入
 
 `--ci` 在这里仅验收不携带私有省份数据库的代码公开包；若维护者持有真实省份数据，仍须
 在私有工作区另跑不带 `--ci` 的发版门禁，并分别保存结果。
+
+许可迁移未完成时，正式公开命令会在运行测试前失败。这是有意的发布阻断，不能通过在
+仓库内自填 `APPROVED`、占位凭据或使用 `--skip-fulltest` 放行。

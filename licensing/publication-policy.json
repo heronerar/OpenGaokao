@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "LEGAL_REVIEW_REQUIRED",
+  "target_model": "source-available-commercial-restricted",
+  "required_terms": {
+    "public_source_visibility": true,
+    "commercial_use_requires_separate_paid_license": true,
+    "competing_product_or_service_use_prohibited_by_default": true
+  },
+  "historical_agpl": {
+    "repository": "heronerar/OpenGaokao",
+    "last_public_commit": "bf1805e6979b6c5022944ce58829e9f27fcabc0c",
+    "license": "AGPL-3.0-or-later",
+    "published_on": "2026-08-02",
+    "existing_rights_not_retracted": true
+  },
+  "future_approval_gate": {
+    "mechanism": "protected-external-signed-manifest",
+    "configured": false,
+    "in_repository_self_approval_permitted": false
+  }
+}
