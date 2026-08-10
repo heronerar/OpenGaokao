@@ -10,9 +10,6 @@ License-Text-SHA256: 94CA1C665A33F52F1800364A9DD33CFB5025825C9D00F2644DC9BC6AFAA
 License-Text-Approval: OWNER_APPROVED
 Counsel-Review: NOT_COUNSEL_VERIFIED
 
-许可人已批准上述精确许可证文本；该新哈希没有律师复核证据，不得称为律师确认版。任何人
-合法取得的历史 AGPL 版本继续适用其原许可证，后续 SAL 不追溯撤销既有权利。
-
 [![OpenGaokao SAL 1.0](https://img.shields.io/badge/license-OpenGaokao%20SAL%201.0-orange)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-green)]()
 [![CI](https://github.com/heronerar/OpenGaokao/actions/workflows/ci.yml/badge.svg)](https://github.com/heronerar/OpenGaokao/actions/workflows/ci.yml)
