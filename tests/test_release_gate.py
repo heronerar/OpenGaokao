@@ -8,7 +8,7 @@ import socket
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
@@ -266,6 +266,13 @@ def _build_ready_release(
 
     head = _git(repo, 'rev-parse', 'HEAD').stdout.strip()
     tree = _git(repo, 'rev-parse', 'HEAD^{tree}').stdout.strip()
+    commit_time = datetime.fromisoformat(
+        _git(repo, 'show', '-s', '--format=%cI', 'HEAD').stdout.strip()
+    ).astimezone(timezone.utc)
+    approval_time = max(
+        datetime.now(timezone.utc),
+        commit_time + timedelta(seconds=1),
+    )
     rights_bom = (
         repo / '.private' / 'rights-bom.csv'
         if rights_inside_repo
@@ -294,7 +301,7 @@ def _build_ready_release(
         'historical_agpl_existing_rights_not_retracted': True,
         'owner_public_id': 'heronerar',
         'owner_decision': 'APPROVE_PUBLIC_RELEASE',
-        'owner_approved_at': datetime.now(timezone.utc).isoformat(),
+        'owner_approved_at': approval_time.isoformat(),
         'counsel_status': 'OWNER_APPROVED_NOT_COUNSEL_VERIFIED',
         'owner_signing_public_key_sha256': hashlib.sha256(
             signing_public_key.encode('utf-8')
