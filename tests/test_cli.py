@@ -7,14 +7,23 @@ import pytest
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def _cli(*args: str) -> subprocess.CompletedProcess:
+def _cli(*args: str, accept_license: bool = True) -> subprocess.CompletedProcess:
+    command = [sys.executable, '-m', 'gaokao.cli']
+    if accept_license:
+        command.append('--accept-license')
+    command.extend(args)
     return subprocess.run(
-        [sys.executable, '-m', 'gaokao.cli', *args],
+        command,
         capture_output=True, text=True, cwd=PROJECT_ROOT,
     )
 
 
 class TestCLI:
+
+    def test_cli_requires_affirmative_license_acceptance(self):
+        r = _cli('--list-provinces', accept_license=False)
+        assert r.returncode == 2
+        assert '--accept-license' in r.stderr
 
     def test_list_provinces(self):
         r = _cli('--list-provinces')
@@ -44,6 +53,18 @@ class TestCLI:
 
         assert cli.cmd_run_example('yunnan') == 1
         assert '示例数据库不存在' in capsys.readouterr().out
+
+
+def test_server_requires_affirmative_license_acceptance():
+    result = subprocess.run(
+        [sys.executable, '-m', 'gaokao.api.server', '--port', '0'],
+        capture_output=True,
+        text=True,
+        cwd=PROJECT_ROOT,
+        timeout=15,
+    )
+    assert result.returncode == 2
+    assert '--accept-license' in result.stderr
 
 
 def test_public_questionnaire_does_not_require_exam_id():

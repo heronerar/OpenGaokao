@@ -1,21 +1,22 @@
 OpenGaokao
-Copyright (C) 2026 OpenGaokao Contributors
+Copyright (C) 2026 heronerar
 
-本程序是自由软件：你可以在 GNU Affero 通用公共许可证 v3.0（AGPL-3.0，见 LICENSE）
-的条款下重新分发和/或修改它。
+Current-License: LicenseRef-OpenGaokao-SAL-1.0
+Historical-License-Exception: AGPL-3.0-or-later
+License-Text-SHA256: 94CA1C665A33F52F1800364A9DD33CFB5025825C9D00F2644DC9BC6AFAAE98FC
+License-Text-Approval: OWNER_APPROVED
+Counsel-Review: NOT_COUNSEL_VERIFIED
 
-────────────────────────────────────────────────────────────────────────
-衍生与修改声明（履行 AGPL-3.0 §5(a)）
-────────────────────────────────────────────────────────────────────────
-本项目衍生自 YGCare：于 2026-06-08 移植其核心推荐算法（约 17 个文件）后，作为
-AGPL-3.0 开源版独立演进。相对原始来源的主要修改包括：
+当前明确标记的新发行内容适用根目录 LICENSE 中的 OpenGaokao Source-Available License 1.0。
+该许可证允许限定的个人非商业本地使用，并对商业使用、竞争性使用、托管服务、修改及再分发
+设置限制。它不是 OSI 开源许可证；完整、具有控制力的条款以 LICENSE 为准。
 
-- 开源化改造，按 AGPL-3.0 发布；
-- 省份配置化（registry + provinces/<省>/province.yaml），目标支持 3+1+2 新高考多省；
-- 数据自助工具链（scripts/import_province.py / create_views.py / post_import_validation.py /
-  verify_release.py）；
-- 移除商业运营与第三方集成模块；
-- 算法缺陷修复与数据口径治理。
+本项目于 2026-06-08 从 YGCare 移植核心推荐代码后独立演进。任何实际合法取得的历史 AGPL
+版本继续适用其原许可证，当前 SAL 不追溯撤销既有权利。历史边界候选仅用于保守治理，不能
+作为对每一次公开时间、受领人或具体提交的最终法律认定。
 
-如你基于本项目再行修改与分发，请按 AGPL-3.0 §5 保留本声明并载明你的修改。
-若你将本程序作为网络服务对外提供，请按 §13 向使用者提供对应完整源码。
+第三方软件、系统字体、用户自行准备的数据和其他未随本源码树分发的材料继续适用各自条款；
+本许可证不替代或扩大这些第三方权利。本发行只包含源码、公开配置及合成演示生成器，不包含
+真实云南数据库、真实考生记录、私有律师材料、商业数据库或系统字体文件。
+
+商业授权意向方可在仓库 Issues 中仅提交不含敏感信息的联系请求，再由许可人提供私下渠道。

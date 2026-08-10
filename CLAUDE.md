@@ -1,7 +1,7 @@
-# OpenGaokao — 开源透明的高考志愿推荐引擎
+# OpenGaokao — 源码可审查的高考志愿推荐引擎
 #
 # 基于 YGCare 核心算法，面向 3+1+2 新高考模式设计；当前仅验收云南。
-# 许可证: AGPL-3.0
+# 许可证: LicenseRef-OpenGaokao-SAL-1.0（源码可见、商业受限）
 
 ## 架构
 
@@ -15,7 +15,7 @@ OpenGaokao/
 ├── gaokao/api/       # Flask REST API
 ├── gaokao/config/    # 省份配置 + 注册表
 ├── provinces/        # 省份配置（社区可贡献）
-├── questionnaires/   # 问卷定义（开源）
+├── questionnaires/   # 问卷定义（源码可审查）
 ├── tests/            # 测试
 └── web/              # 前端
 ```
@@ -65,10 +65,10 @@ OpenGaokao/
 ## 常用命令
 ```bash
 # 命令行运行
-python -m gaokao.cli --province yunnan --example
+python -m gaokao.cli --accept-license --province yunnan --example
 
 # 启动 API
-python -m gaokao.api.server --province yunnan
+python -m gaokao.api.server --accept-license --province yunnan
 
 # 测试
 pytest tests/ -v

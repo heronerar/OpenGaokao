@@ -30,6 +30,7 @@ dist/
 build/
 
 # === Secrets ===
+.private/
 .env
 .env.local
 .env.*.local

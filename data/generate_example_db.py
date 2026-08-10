@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: LicenseRef-OpenGaokao-SAL-1.0
 # Copyright (C) 2026 OpenGaokao Contributors
 """
 生成示例 SQLite 数据库 — 合成的云南省高考录取数据

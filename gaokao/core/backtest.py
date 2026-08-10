@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: LicenseRef-OpenGaokao-SAL-1.0
 # Copyright (C) 2026 OpenGaokao Contributors
 """
 回溯测试 (Backtest) — 用 5 个合成样例验证算法链路

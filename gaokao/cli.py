@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: LicenseRef-OpenGaokao-SAL-1.0
 # Copyright (C) 2026 OpenGaokao Contributors
 """
 OpenGaokao CLI — 命令行入口
@@ -333,7 +333,10 @@ def cmd_check_data(province: str, db_path: str):
         print()
 
     if not issues:
-        print(f'✅ 数据库校验通过！可以运行: python -m gaokao.cli --province {province} --example')
+        print(
+            '✅ 数据库校验通过！可以运行: '
+            f'python -m gaokao.cli --accept-license --province {province} --example'
+        )
         return 0
     else:
         return 1
@@ -347,7 +350,18 @@ def main() -> int:
     parser.add_argument('--check-data', action='store_true', help='检查数据库数据完整性')
     parser.add_argument('--db', default=None, help='数据库路径（覆盖省份默认路径）')
     parser.add_argument('--example', action='store_true', help='运行示例推荐')
+    parser.add_argument(
+        '--accept-license',
+        action='store_true',
+        help='确认已阅读并接受 LICENSE 中的 OpenGaokao SAL 1.0',
+    )
     args = parser.parse_args()
+
+    if not args.accept_license:
+        parser.error(
+            '运行 OpenGaokao 前必须阅读 LICENSE，并显式添加 --accept-license '
+            '接受 LicenseRef-OpenGaokao-SAL-1.0'
+        )
 
     if args.list_provinces:
         return cmd_list_provinces()

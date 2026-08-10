@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: LicenseRef-OpenGaokao-SAL-1.0
 # Copyright (C) 2026 OpenGaokao Contributors
 """
 数据导入后自动验证 (Post-Import Validation) — OpenGaokao 多省版

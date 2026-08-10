@@ -1,6 +1,7 @@
 /**
  * app.js — OpenGaokao 前端入口
  * 连接 survey_engine（问卷模式）与 result_view（结果模式）
+ * LicenseRef-OpenGaokao-SAL-1.0
  */
 (function() {
   'use strict';
@@ -13,7 +14,7 @@
     const appResult = document.getElementById('app-result');
     const loading = document.getElementById('loading');
 
-    // AGPL §13：部署 fork 时由后端 OPENGAOKAO_SOURCE_URL 覆盖为对应源码地址。
+    // SAL 源码提示：另行获准部署时由 OPENGAOKAO_SOURCE_URL 指向对应源码位置。
     fetch('/api/health', { cache: 'no-store' })
       .then(resp => resp.ok ? resp.json() : null)
       .then(health => {

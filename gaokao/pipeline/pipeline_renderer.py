@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: LicenseRef-OpenGaokao-SAL-1.0
 # Copyright (C) 2026 OpenGaokao Contributors
 """
 决策管道 HTML 渲染器 (Pipeline Renderer)

@@ -1,8 +1,8 @@
 # 参与 OpenGaokao
 
-> 许可迁移期间暂停合并外部代码贡献。项目正从历史 AGPL 版本评估迁移到
-> “源码可见、商业受限”模式；在权属链、定制许可证及贡献协议经律师审定前，仅接受
-> issue、复现材料和不包含第三方代码的讨论。详情见 [LICENSING.md](LICENSING.md)。
+> 当前发行适用 `LicenseRef-OpenGaokao-SAL-1.0`，是“源码可见、商业受限”模式，不是
+> OSI 开源。在独立贡献协议启用前暂停合并外部代码贡献；仅接受 issue、复现材料和不包含
+> 第三方代码的讨论。详情见 [LICENSING.md](LICENSING.md)。
 
 感谢你改进 OpenGaokao。当前支持的开发方式是在仓库根目录直接运行源码；项目尚未
 提供可独立运行的 wheel / PyPI 安装包。
@@ -40,21 +40,23 @@ python scripts/verify_release.py --ci
 - 推荐算法、科类映射、概率阈值或数据导入发生变化时，除 pytest 外还要运行对应省份的
   `scripts/post_import_validation.py` 和真实入口验收。
 - 发版门禁失败时不得宣告完成，也不得用 example/mock 结果替代真实数据验收。
-- 提交贡献即表示你有权按 `AGPL-3.0-or-later` 授权该贡献。YGCare 的商业运营及第三方
-  集成模块不属于本项目贡献范围。
+- 未经维护者提供并签署独立贡献协议，请不要通过 PR 提交代码、文档或配置。YGCare 的商业
+  运营及第三方集成模块不属于本项目贡献范围。
 
 维护者在公开发布前还必须运行：
 
 ```bash
 python scripts/verify_release.py --ci --public-release \
-  --pii-denylist <不进入 Git 的私有文件>
+  --pii-denylist <不进入 Git 的私有文件> \
+  --rights-bom <仓库外最终逐文件权属清单> \
+  --release-approval <仓库外许可人批准JSON>
 ```
 
 私有 denylist 应包含已知真实姓名和其他高风险字面量；门禁会检查待发布文件及所有 Git
 引用。该文件本身不得被 Git 跟踪。
 
-`--ci` 在这里仅验收不携带私有省份数据库的代码公开包；若维护者持有真实省份数据，仍须
-在私有工作区另跑不带 `--ci` 的发版门禁，并分别保存结果。
+`--ci` 在这里仅验收不携带私有省份数据库的源码与合成演示包。真实数据验收是另一个私有
+证据范围，不能用合成示例冒充，也不应把真实数据库放入发行工作树。
 
-许可迁移未完成时，正式公开命令会在运行测试前失败。这是有意的发布阻断，不能通过在
-仓库内自填 `APPROVED`、占位凭据或使用 `--skip-fulltest` 放行。
+缺少仓库外 Rights BOM、许可人批准回执或 SSH 签名固定 Tag 时，正式公开命令会失败。这是
+有意的发布阻断，不能通过仓库内自填状态、占位凭据或使用 `--skip-fulltest` 放行。

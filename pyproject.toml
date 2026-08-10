@@ -1,17 +1,18 @@
 [project]
 name = "open-gaokao"
 version = "1.0.0"
-description = "开源透明的高考志愿推荐引擎 — 面向3+1+2模式设计，当前仅验收云南"
+description = "源码可见、商业受限的高考志愿推荐引擎 — 面向3+1+2模式设计，当前仅验收云南"
 readme = "README.md"
+# SPDX-License-Identifier: LicenseRef-OpenGaokao-SAL-1.0
 license = {file = "LICENSE"}
 authors = [
-    {name = "OpenGaokao Contributors"}
+    {name = "heronerar"}
 ]
-keywords = ["gaokao", "college-admission", "volunteer-recommendation", "open-source"]
+keywords = ["gaokao", "college-admission", "volunteer-recommendation", "source-available"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Education",
-    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "License :: Other/Proprietary License",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",

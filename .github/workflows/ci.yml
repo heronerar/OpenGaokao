@@ -20,10 +20,10 @@ jobs:
       matrix:
         python-version: ['3.10', '3.12']
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -46,10 +46,10 @@ jobs:
           rm -f data/ci_example_gaokao.db
 
       - name: 发版门禁（CI 模式）
-        # 语法 + pytest + 真实 Flask/Web/API 进程（显式 example 源）+ 隐私 + AGPL
+        # 语法 + pytest + 真实 Flask/Web/API 进程（显式 example 源）+ 隐私 + 当前许可全表面
         run: python scripts/verify_release.py --ci
 
-      - name: 许可迁移期间公开发布必须失败关闭
+      - name: 缺少仓库外发布凭据必须失败关闭
         shell: bash
         run: |
           set +e
@@ -58,5 +58,4 @@ jobs:
           set -e
           printf '%s\n' "$output"
           test "$status" -eq 1
-          grep -F 'LEGAL_REVIEW_REQUIRED' <<<"$output"
-          grep -F '仓库必须保持 PRIVATE' <<<"$output"
+          grep -F '缺少 --release-approval' <<<"$output"

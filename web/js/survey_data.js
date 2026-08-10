@@ -1,6 +1,6 @@
 /**
  * survey_data.js — 10 步问卷配置
- * 每步分组定义所有 236 题的字段、类型、选项、验证规则
+ * 静态字段按科类条件筛选，RIASEC 题由 API 动态加载
  * 与 questionnaire_parser.py 的 PHYSICS_FIELD_MAP 对齐
  */
 window.SURVEY_STEPS = [

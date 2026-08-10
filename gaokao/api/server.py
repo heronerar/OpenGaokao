@@ -1,9 +1,9 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: LicenseRef-OpenGaokao-SAL-1.0
 # Copyright (C) 2026 OpenGaokao Contributors
 """
 OpenGaokao Flask API — 简易后端
 ─────────────────────────────────────
-启动: python -m gaokao.api.server [--province yunnan] [--port 5000]
+启动: python -m gaokao.api.server --accept-license [--province yunnan] [--port 5000]
 
 端点:
   GET  /api/health                  健康检查
@@ -92,18 +92,17 @@ def resolve_database(province: str):
 app = Flask(__name__, static_folder=None)
 CORS(app, resources={r'/api/*': {'origins': '*'}})
 
-# OG-F-34: AGPL §13 网络服务条款——对外提供服务时须告知使用者对应源码的获取途径。
-# 部署你自己的 fork 时，请设环境变量 OPENGAOKAO_SOURCE_URL 指向你的（含改动的）源码仓库。
-# 注意：默认值为占位地址，公开部署前必须改为真实仓库 URL（发布闸门，见 docs/audit OG-F-47）。
+# SAL 源码可见性提示：本地服务向用户展示其对应源码地址与当前许可证标识。
+# 另行获准部署时，请把 OPENGAOKAO_SOURCE_URL 指向实际获授权的源码位置。
 SOURCE_REPO_URL = os.environ.get('OPENGAOKAO_SOURCE_URL',
                                  'https://github.com/heronerar/OpenGaokao')
 
 
 @app.after_request
 def _add_source_offer(resp):
-    # AGPL §13: 每个响应附带源码获取途径
+    # 每个响应附带当前发行的源码位置与许可证标识。
     resp.headers['X-Source-Code'] = SOURCE_REPO_URL
-    resp.headers['X-License'] = 'AGPL-3.0-or-later'
+    resp.headers['X-License'] = 'LicenseRef-OpenGaokao-SAL-1.0'
     return resp
 
 
@@ -127,7 +126,7 @@ def health():
         'service': 'OpenGaokao API',
         'web_dir': WEB_DIR,
         'cached_engines': list(_engine_cache.keys()),
-        'license': 'AGPL-3.0-or-later',  # OG-F-34: §13 源码 offer
+        'license': 'LicenseRef-OpenGaokao-SAL-1.0',
         'source_url': SOURCE_REPO_URL,
     })
 
@@ -388,13 +387,17 @@ def _build_efficacy_dict(answers: Dict, category: str) -> Dict[int, int]:
     out = {}
     is_history = '历史' in (category or '')
     base = 77 if is_history else 76
+    web_base = 76
     # 15 题：q76~q90 (物理) / q77~q91 (历史)
     suffixes = ['se_cn1','se_cn2','se_cn3','se_cn4','se_cn5',
                 'se_mt1','se_mt2','se_mt3','se_mt4','se_mt5',
                 'se_en1','se_en2','se_en3','se_en4','se_en5']
     for i, sfx in enumerate(suffixes):
-        key = f'q{base + i}_{sfx}'
-        val = answers.get(key)
+        keys = [f'q{base + i}_{sfx}']
+        if is_history:
+            keys.append(f'q{web_base + i}_{sfx}')
+        val = next((answers[key] for key in keys
+                    if answers.get(key) is not None and answers.get(key) != ''), None)
         if val is not None and val != '':
             try:
                 out[base + i] = int(val)
@@ -407,6 +410,7 @@ def _build_career_values_dict(answers: Dict, category: str) -> Dict[int, int]:
     out = {}
     is_history = '历史' in (category or '')
     base = 92 if is_history else 91
+    web_base = 91
     # 20 题
     suffixes = [
         'cv_income1','cv_income2','cv_stability1','cv_stability2',
@@ -416,8 +420,11 @@ def _build_career_values_dict(answers: Dict, category: str) -> Dict[int, int]:
         'cv_location1','cv_location2','cv_learning1','cv_learning2',
     ]
     for i, sfx in enumerate(suffixes):
-        key = f'q{base + i}_{sfx}'
-        val = answers.get(key)
+        keys = [f'q{base + i}_{sfx}']
+        if is_history:
+            keys.append(f'q{web_base + i}_{sfx}')
+        val = next((answers[key] for key in keys
+                    if answers.get(key) is not None and answers.get(key) != ''), None)
         if val is not None and val != '':
             try:
                 out[base + i] = int(val)
@@ -800,7 +807,18 @@ def main():
     parser.add_argument('--port', type=int, default=5000, help='监听端口')
     parser.add_argument('--host', default='127.0.0.1', help='监听地址')
     parser.add_argument('--debug', action='store_true', help='Flask debug 模式')
+    parser.add_argument(
+        '--accept-license',
+        action='store_true',
+        help='确认已阅读并接受 LICENSE 中的 OpenGaokao SAL 1.0',
+    )
     args = parser.parse_args()
+
+    if not args.accept_license:
+        parser.error(
+            '运行 OpenGaokao 前必须阅读 LICENSE，并显式添加 --accept-license '
+            '接受 LicenseRef-OpenGaokao-SAL-1.0'
+        )
 
     log.info(f'🚀 OpenGaokao API 启动 — http://{args.host}:{args.port}')
     log.info(f'   默认省份: {args.province}')

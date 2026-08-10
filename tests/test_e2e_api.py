@@ -162,6 +162,7 @@ def run_runtime_acceptance(province: str, expected_data_source: str) -> dict:
         sys.executable,
         '-m',
         'gaokao.api.server',
+        '--accept-license',
         '--province',
         province,
         '--host',
@@ -182,11 +183,13 @@ def run_runtime_acceptance(province: str, expected_data_source: str) -> dict:
         )
         try:
             health = _wait_until_ready(base_url, proc)
+            if health.get('license') != 'LicenseRef-OpenGaokao-SAL-1.0':
+                raise RuntimeError(f'API 许可证标识不一致：{health.get("license")!r}')
 
             page = _get_text(f'{base_url}/')
             if '<title>OpenGaokao' not in page or 'js/app.js' not in page:
                 raise RuntimeError('Web 首页未包含预期标题或 app.js 入口')
-            if 'data-source-code' not in page or 'AGPL-3.0' not in page:
+            if 'data-source-code' not in page or 'OpenGaokao SAL 1.0' not in page:
                 raise RuntimeError('Web 首页未提供用户可见的对应源码入口')
 
             result_view = _get_text(f'{base_url}/js/result_view.js')

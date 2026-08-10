@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: LicenseRef-OpenGaokao-SAL-1.0
 # Copyright (C) 2026 OpenGaokao Contributors
 """项目自编大五维度问卷 + RIASEC 风格兴趣问卷题目单一真源 — AUDIT-P0-011
 

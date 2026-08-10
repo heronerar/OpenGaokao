@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: LicenseRef-OpenGaokao-SAL-1.0
 # Copyright (C) 2026 OpenGaokao Contributors
 """
 问卷解析引擎 (Questionnaire Parser) V3.1
@@ -569,13 +569,20 @@ class QuestionnaireParser:
         is_history = '历史' in raw_data.get('q14_category', raw_data.get('q11_category', ''))
         cat_key = 'history' if is_history else 'physics'
         se_keys = self._SE_KEYS[cat_key]
+        web_keys = self._SE_KEYS['physics']
 
         efficacy = {}
         for subject, keys in se_keys.items():
-            vals = [
-                score for score in (self._parse_likert_score(raw_data[k]) for k in keys if k in raw_data)
-                if score is not None
-            ]
+            vals = []
+            for index, key in enumerate(keys):
+                candidates = (key, web_keys[subject][index]) if is_history else (key,)
+                for candidate in candidates:
+                    if candidate not in raw_data:
+                        continue
+                    score = self._parse_likert_score(raw_data[candidate])
+                    if score is not None:
+                        vals.append(score)
+                        break
             efficacy[subject] = round(sum(vals) / len(vals), 1) if vals else 0.0
         return efficacy
 
@@ -583,6 +590,7 @@ class QuestionnaireParser:
         """解析职业价值观（从字符串键读取，以 JSON 题号为准）"""
         is_history = '历史' in raw_data.get('q14_category', raw_data.get('q11_category', ''))
         base = self._CV_BASES['history' if is_history else 'physics']
+        web_base = self._CV_BASES['physics']
 
         values = {}
         for idx, dim in enumerate(self._CV_DIMS):
@@ -590,14 +598,18 @@ class QuestionnaireParser:
             k1 = f'q{base + idx*2}_cv_{s1}'
             k2 = f'q{base + idx*2 + 1}_cv_{s2}'
             vals = []
-            if k1 in raw_data:
-                score = self._parse_likert_score(raw_data[k1])
-                if score is not None:
-                    vals.append(score)
-            if k2 in raw_data:
-                score = self._parse_likert_score(raw_data[k2])
-                if score is not None:
-                    vals.append(score)
+            for key, web_key in (
+                (k1, f'q{web_base + idx*2}_cv_{s1}'),
+                (k2, f'q{web_base + idx*2 + 1}_cv_{s2}'),
+            ):
+                candidates = (key, web_key) if is_history else (key,)
+                for candidate in candidates:
+                    if candidate not in raw_data:
+                        continue
+                    score = self._parse_likert_score(raw_data[candidate])
+                    if score is not None:
+                        vals.append(score)
+                        break
             values[dim] = round(sum(vals) / len(vals), 1) if vals else 0.0
         return values
 

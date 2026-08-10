@@ -1,22 +1,80 @@
 {
-  "schema_version": 1,
-  "status": "LEGAL_REVIEW_REQUIRED",
+  "schema_version": 2,
+  "status": "READY_PENDING_EXTERNAL_RECEIPT",
   "target_model": "source-available-commercial-restricted",
   "required_terms": {
     "public_source_visibility": true,
+    "not_osi_open_source": true,
+    "personal_noncommercial_local_use_allowed": true,
+    "necessary_local_copy_and_single_backup_allowed": true,
+    "personal_local_modification_allowed": true,
+    "qualified_nonprofit_classroom_display_allowed": true,
+    "qualified_noncommercial_research_allowed": true,
+    "single_personal_report_limited_sharing_allowed": true,
     "commercial_use_requires_separate_paid_license": true,
-    "competing_product_or_service_use_prohibited_by_default": true
+    "competing_product_or_service_use_prohibited_by_default": true,
+    "original_source_off_platform_redistribution_prohibited": true,
+    "modified_version_redistribution_prohibited": true,
+    "modified_version_redistribution_not_commercially_licensable": true,
+    "commercial_hosting_saas_api_requires_paid_license": true,
+    "github_direct_platform_rights_exception_required": true,
+    "github_on_platform_fork_allowed": true,
+    "significant_standard_terms_require_affirmative_acceptance": true,
+    "no_express_patent_license": true,
+    "free_use_liability_cap_cny": 100,
+    "general_breach_cure_period_business_days": 10,
+    "historical_agpl_existing_rights_not_retracted": true,
+    "public_release_synthetic_example_only": true,
+    "real_yunnan_data_excluded": true
+  },
+  "commercial_contact": {
+    "method": "github-issue-to-owner",
+    "owner_public_id": "heronerar",
+    "sensitive_material_in_public_issue_prohibited": true,
+    "issue_availability_must_be_verified_before_release": true
+  },
+  "legal_text_review": {
+    "status": "OWNER_REPORTED_COUNSEL_CONFIRMED_UNCHANGED",
+    "reviewed_draft_sha256": "18405F7503A2F0732122BE6FF7E982C2D821948B75D28335E8E4338800965F69",
+    "confirmation_scope": "exact-private-draft-bytes-only",
+    "owner_reported_on": "2026-08-09",
+    "derived_publication_text_status": "OWNER_APPROVAL_REQUIRES_EXTERNAL_RECEIPT",
+    "derived_publication_text_sha256": "94CA1C665A33F52F1800364A9DD33CFB5025825C9D00F2644DC9BC6AFAAE98FC"
+  },
+  "rights_clearance": {
+    "status": "RIGHTS_MANIFEST_REQUIRES_EXTERNAL_RECEIPT",
+    "publication_allowed_only_with_external_receipt": true
   },
   "historical_agpl": {
     "repository": "heronerar/OpenGaokao",
-    "last_public_commit": "bf1805e6979b6c5022944ce58829e9f27fcabc0c",
+    "conservative_boundary_candidate": "bf1805e6979b6c5022944ce58829e9f27fcabc0c",
     "license": "AGPL-3.0-or-later",
-    "published_on": "2026-08-02",
-    "existing_rights_not_retracted": true
+    "observed_public_on": "2026-08-02",
+    "existing_rights_not_retracted": true,
+    "boundary_not_final_legal_determination": true
   },
-  "future_approval_gate": {
-    "mechanism": "protected-external-signed-manifest",
-    "configured": false,
-    "in_repository_self_approval_permitted": false
+  "release_target": {
+    "repository": "heronerar/OpenGaokao",
+    "license_path": "LICENSE",
+    "license_identifier": "LicenseRef-OpenGaokao-SAL-1.0",
+    "license_sha256": "94CA1C665A33F52F1800364A9DD33CFB5025825C9D00F2644DC9BC6AFAAE98FC",
+    "release_scope": "source-only-synthetic-demo",
+    "synthetic_example_only": true,
+    "real_yunnan_data_included": false
+  },
+  "release_authorization": {
+    "status": "READY_PENDING_EXTERNAL_RECEIPT",
+    "mechanism": "external-release-approval-receipt",
+    "configured": true,
+    "in_repository_self_approval_permitted": false,
+    "tag_signature_required": true,
+    "tag_signature_format": "ssh",
+    "signing_public_key_status": "OWNER_CONFIRMED_OUT_OF_BAND",
+    "signing_trust_anchor_source": "owner-confirmed-out-of-band",
+    "candidate_generated_key_permitted": false,
+    "signing_identity": "heronerar",
+    "signing_public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBq5e90GaMszIT24YGUAY9LKb5Srpm8L3d7r9P4i5aTd",
+    "signing_public_key_fingerprint": "SHA256:4YG/KaOdfRAXzuCJKQJhExYLf3hObWTnS6SrVb1Co5o",
+    "owner_authorization_record_sha256": "151B419A05D594493C7DA7D2293E5F47674A9070EAF938646663EFE36240AA3A"
   }
 }

@@ -104,6 +104,53 @@ class TestEndToEnd:
             finally:
                 engine.close()
 
+    def test_history_web_preference_answers_reach_scoring(self):
+        """历史类 Web 使用 q76-q110 时，35 道偏好答案不能静默丢失。"""
+        from gaokao.api.server import _build_career_values_dict, _build_efficacy_dict
+        from gaokao.core.questionnaire_parser import QuestionnaireParser
+
+        se_suffixes = [
+            'se_cn1', 'se_cn2', 'se_cn3', 'se_cn4', 'se_cn5',
+            'se_mt1', 'se_mt2', 'se_mt3', 'se_mt4', 'se_mt5',
+            'se_en1', 'se_en2', 'se_en3', 'se_en4', 'se_en5',
+        ]
+        cv_suffixes = [
+            'cv_income1', 'cv_income2', 'cv_stability1', 'cv_stability2',
+            'cv_achievement1', 'cv_achievement2', 'cv_help1', 'cv_help2',
+            'cv_creative1', 'cv_creative2', 'cv_balance1', 'cv_balance2',
+            'cv_leadership1', 'cv_leadership2', 'cv_autonomy1', 'cv_autonomy2',
+            'cv_location1', 'cv_location2', 'cv_learning1', 'cv_learning2',
+        ]
+        web_answers = {'q14_category': '历史类'}
+        json_answers = {'q14_category': '历史类'}
+        for index, suffix in enumerate(se_suffixes):
+            value = str(index % 5 + 1)
+            web_answers[f'q{76 + index}_{suffix}'] = value
+            json_answers[f'q{77 + index}_{suffix}'] = value
+        for index, suffix in enumerate(cv_suffixes):
+            value = str(index % 5 + 1)
+            web_answers[f'q{91 + index}_{suffix}'] = value
+            json_answers[f'q{92 + index}_{suffix}'] = value
+
+        with open(os.path.join(PROJECT_ROOT, 'web', 'js', 'survey_data.js'),
+                  encoding='utf-8') as f:
+            web_source = f.read()
+        for key in list(web_answers)[1:]:
+            assert f"id: '{key}'" in web_source
+
+        parser = QuestionnaireParser()
+        assert parser.parse_self_efficacy(web_answers) == parser.parse_self_efficacy(json_answers)
+        assert parser.parse_career_values(web_answers) == parser.parse_career_values(json_answers)
+
+        web_efficacy = _build_efficacy_dict(web_answers, '历史类')
+        json_efficacy = _build_efficacy_dict(json_answers, '历史类')
+        web_career = _build_career_values_dict(web_answers, '历史类')
+        json_career = _build_career_values_dict(json_answers, '历史类')
+        assert web_efficacy == json_efficacy
+        assert web_career == json_career
+        assert set(web_efficacy) == set(range(77, 92))
+        assert set(web_career) == set(range(92, 112))
+
     def test_probability_calculate_with_db(self):
         """AdmissionProbability.calculate 用真实数据库跑通"""
         _ensure_example_db()
@@ -161,7 +208,10 @@ class TestEndToEnd:
         _ensure_example_db()
         import subprocess
         r = subprocess.run(
-            [sys.executable, '-m', 'gaokao.cli', '--province', 'yunnan', '--example'],
+            [
+                sys.executable, '-m', 'gaokao.cli', '--accept-license',
+                '--province', 'yunnan', '--example',
+            ],
             capture_output=True, text=True, cwd=PROJECT_ROOT,
             timeout=60,
         )
