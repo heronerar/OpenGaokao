@@ -267,7 +267,7 @@ def _build_ready_release(
     head = _git(repo, 'rev-parse', 'HEAD').stdout.strip()
     tree = _git(repo, 'rev-parse', 'HEAD^{tree}').stdout.strip()
     commit_time = datetime.fromisoformat(
-        _git(repo, 'show', '-s', '--format=%cI', 'HEAD').stdout.strip()
+        _git(repo, 'show', '-s', '--format=%cI', 'HEAD').stdout.strip().replace('Z', '+00:00')
     ).astimezone(timezone.utc)
     approval_time = max(
         datetime.now(timezone.utc),
