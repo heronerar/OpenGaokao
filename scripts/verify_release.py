@@ -163,6 +163,11 @@ def _load_json_without_duplicate_keys(text: str):
     return json.loads(text, object_pairs_hook=reject_duplicates)
 
 
+def _parse_iso_datetime(value: str) -> datetime:
+    """解析 ISO 时间；兼容 Python 3.10 不接受 Git `%cI` 的 `Z` 后缀。"""
+    return datetime.fromisoformat(value.replace('Z', '+00:00'))
+
+
 def _license_acceptance_gate_error(path: Path) -> str | None:
     """核验入口确实定义布尔参数，并在 main 中以 parser.error 失败关闭。"""
     try:
@@ -1409,11 +1414,11 @@ def check_publication_authorization(
         if tag.returncode != 0 or _decode_git_path(tag.stdout).strip() != head_sha:
             mismatches.append('release_tag')
     try:
-        approved_time = datetime.fromisoformat(approved_at.replace('Z', '+00:00'))
+        approved_time = _parse_iso_datetime(approved_at)
         commit_raw = _run_git(['show', '-s', '--format=%cI', 'HEAD'])
         if commit_raw.returncode != 0:
             raise ValueError('missing commit time')
-        commit_time = datetime.fromisoformat(_decode_git_path(commit_raw.stdout).strip())
+        commit_time = _parse_iso_datetime(_decode_git_path(commit_raw.stdout).strip())
         if (
             approved_time.tzinfo is None
             or approved_time < commit_time

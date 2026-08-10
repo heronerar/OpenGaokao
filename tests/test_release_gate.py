@@ -79,6 +79,13 @@ def _sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest().upper()
 
 
+def test_iso_datetime_parser_accepts_git_utc_z_suffix():
+    """Python 3.10 必须能解析 Linux Git `%cI` 常见的 UTC Z 后缀。"""
+    parsed = verify_release._parse_iso_datetime('2026-08-10T13:34:59Z')
+
+    assert parsed == datetime(2026, 8, 10, 13, 34, 59, tzinfo=timezone.utc)
+
+
 def _write_final_rights_bom(repo, rights_bom, *, unsafe_path=None):
     """为已提交 HEAD 生成覆盖全树、哈希按 Git blob 计算的测试清单。"""
     result = subprocess.run(
