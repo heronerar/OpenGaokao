@@ -1,0 +1,21 @@
+version: 2
+
+# 只创建待审 PR；是否合并始终由维护者决定。
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:17'
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 2
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:27'
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 2

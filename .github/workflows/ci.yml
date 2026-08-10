@@ -11,6 +11,9 @@ on:
   push:
     branches: [ main, master ]
   pull_request:
+  schedule:
+    # 每周一 03:17（北京时间；周日 19:17 UTC），避开整点拥堵。
+    - cron: '17 19 * * 0'
 
 jobs:
   gate:
