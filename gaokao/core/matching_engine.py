@@ -1807,7 +1807,10 @@ class MatchingEngine:
 
         # 色觉归一化：兼容前端多种存储格式
         cv = hs.color_vision or ''
-        if '色盲' in cv or '红绿色盲' in cv:
+        # 正常选项也包含“色盲/色弱”，必须先排除；不明确值不假设受限。
+        if cv.startswith('无') or cv in ('', '正常', '不清楚', '未知'):
+            pass
+        elif '色盲' in cv:
             restrictions.extend(['化学类', '医学类', '生物类', '美术类'])
         elif '色弱' in cv:
             restrictions.extend(['化学类', '医学类'])
@@ -1937,15 +1940,18 @@ class MatchingEngine:
         if questionnaire.health_screening:
             hs = questionnaire.health_screening
             cv = hs.color_vision or ''
-            if '色盲' in cv:
+            # 与体检专业筛选一致：先排除正常/不明确选项。
+            if cv.startswith('无') or cv == '正常':
+                answers['color_vision'] = '正常'
+            elif cv in ('', '不清楚', '未知'):
+                pass  # 保留 None，不把不明确值假设为正常或异常
+            elif '色盲' in cv:
                 answers['color_vision'] = '色盲'
             elif '色弱' in cv:
                 answers['color_vision'] = '色弱'
             elif '障碍' in cv or '识别' in cv:
                 answers['color_vision'] = '颜色识别障碍'
-            elif cv in ('正常', '无'):
-                answers['color_vision'] = '正常'
-            elif cv and cv not in ('正常', '无'):
+            elif cv:
                 answers['color_vision'] = cv
 
             # 视力

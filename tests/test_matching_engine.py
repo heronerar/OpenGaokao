@@ -5,6 +5,16 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import json
+from pathlib import Path
+from unittest.mock import patch
+
+from gaokao.core.constraint_checker import check_constraints
+from gaokao.core.matching_engine import MatchingEngine
+from gaokao.core.questionnaire_parser import (
+    HealthScreening, QuestionnaireParser, UserQuestionnaire,
+)
+
 
 class TestRiskStrategyInference:
     """风险策略推断（_infer_risk_strategy 的等价测试）"""
@@ -217,3 +227,94 @@ class TestScoreMajors:
             assert new_major.score <= 70
             assert new_major.is_new_major is True
             assert old_major.score > 70
+
+
+# Read the public surveys so changes to their real options are covered automatically.
+
+_COLOR_EXPECTATIONS = {
+    '无色盲色弱': ('正常', []),
+    '轻度色弱（部分专业受限）': ('色弱', ['化学类', '医学类']),
+    '色盲（多项专业受限）': ('色盲', ['化学类', '医学类', '生物类', '美术类']),
+    '红绿色盲（多项专业受限）': ('色盲', ['化学类', '医学类', '生物类', '美术类']),
+    '不清楚': (None, []),
+}
+
+
+def _survey_color_cases():
+    cases = []
+    for subject in ('physics', 'history'):
+        path = Path(__file__).resolve().parents[1] / 'questionnaires' / (
+            f'volunteer_survey_{subject}.json'
+        )
+        survey = json.loads(path.read_text(encoding='utf-8'))
+        question = next(q for section in survey['sections']
+                        for q in section['questions'] if q['id'] == 'q9_color_vision')
+        cases.extend((survey['category'], option) for option in question['options'])
+    return cases
+
+
+def _color_questionnaire(category, value, parsed=False):
+    if parsed:
+        parser = QuestionnaireParser.create_by_category(category)
+        return parser.parse({
+            'q1_name': '色觉回归', 'q12_total_score': 600,
+            'q13_rank': 10000, 'q14_category': category, 'q9_color_vision': value,
+        })
+    return UserQuestionnaire(
+        name='色觉回归', gender='男', exam_id='EX001', phone='',
+        category=category, total_score=600, rank=10000,
+        health_screening=HealthScreening(color_vision=value),
+    )
+
+
+class TestColorVisionRegression:
+    @pytest.mark.parametrize('category,option', _survey_color_cases())
+    @pytest.mark.parametrize('parsed', [False, True], ids=['direct', 'parsed'])
+    def test_real_survey_options(self, category, option, parsed):
+        expected_color, expected_restrictions = _COLOR_EXPECTATIONS[option]
+        q = _color_questionnaire(category, option, parsed)
+        engine = MatchingEngine(':memory:')
+        try:
+            assert engine._get_health_restrictions(q) == expected_restrictions
+            assert set(engine._get_excluded_majors(q)) == set(expected_restrictions)
+            # Exercise match's real call to the checker; isolate recommendation/DB work.
+            with patch('gaokao.core.matching_engine.check_constraints',
+                       wraps=check_constraints) as checker, \
+                 patch.object(engine, '_generate_recommendations',
+                              return_value={'冲': [], '稳': [], '保': []}), \
+                 patch.object(engine, '_get_all_schools_with_majors', return_value=[]):
+                result = engine.match(q)
+            checker.assert_called_once()
+            assert checker.call_args.args[0]['color_vision'] == expected_color
+            # No restriction rules are changed: compare against the existing checker.
+            baseline = check_constraints({'color_vision': expected_color})
+            assert set(result.constraint_result.filtered_majors) == set(baseline.filtered_majors)
+            assert set(engine._get_excluded_majors(q)) == (
+                set(expected_restrictions) | set(baseline.filtered_majors)
+            )
+        finally:
+            engine.close()
+
+    @pytest.mark.parametrize('value', ['', None, '正常', '无', '无色弱', '不清楚', '未知'])
+    def test_normal_and_unspecified_do_not_restrict(self, value):
+        engine = MatchingEngine(':memory:')
+        try:
+            q = _color_questionnaire('物理类', value)
+            assert engine._get_health_restrictions(q) == []
+            expected = '正常' if value and (value.startswith('无') or value == '正常') else None
+            assert engine._build_constraint_answers(q)['color_vision'] == expected
+            # Other health restrictions must still apply.
+            q.health_screening.smell = '嗅觉迟钝'
+            assert engine._get_health_restrictions(q) == ['食品科学类']
+        finally:
+            engine.close()
+
+    def test_no_health_screening(self):
+        engine = MatchingEngine(':memory:')
+        try:
+            q = _color_questionnaire('物理类', '')
+            q.health_screening = None
+            assert engine._get_health_restrictions(q) == []
+            assert engine._build_constraint_answers(q)['color_vision'] is None
+        finally:
+            engine.close()
